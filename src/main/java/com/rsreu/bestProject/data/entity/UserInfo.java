@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -54,6 +55,11 @@ public class UserInfo implements UserDetails {
     @NotNull
     @Column(name = "date_registration")
     private OffsetDateTime dateRegistration;
+
+    @Column(name = "rating")
+    @ElementCollection
+    @CollectionTable(name = "user_rating", joinColumns = @JoinColumn(name = "user_id"))
+    private List<Integer> rating;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

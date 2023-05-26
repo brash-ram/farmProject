@@ -32,4 +32,7 @@ public class UserInfoDTO {
 
     @NotNull
     private Long dateRegistration;
+
+    @NotNull
+    private Double rating;
 }
