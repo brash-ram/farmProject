@@ -14,7 +14,8 @@ public class TemplateService {
     private final TemplateRepository templateRepository;
     private final DtoMapper dtoMapper;
 
-    public void add(TemplateEntity entity){
+    public void add(TemplateDTORequest request){
+        TemplateEntity entity = new TemplateEntity();
         templateRepository.save(entity);
     }
 
