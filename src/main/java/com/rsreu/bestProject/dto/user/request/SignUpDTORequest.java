@@ -25,4 +25,5 @@ public class SignUpDTORequest {
 
     @NotNull
     private String password;
+
 }

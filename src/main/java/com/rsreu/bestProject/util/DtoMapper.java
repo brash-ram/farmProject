@@ -1,14 +1,15 @@
 package com.rsreu.bestProject.util;
 
 
+import com.rsreu.bestProject.data.entity.Delivery;
 import com.rsreu.bestProject.data.entity.Product;
 import com.rsreu.bestProject.data.entity.TemplateEntity;
 import com.rsreu.bestProject.data.entity.UserInfo;
+import com.rsreu.bestProject.dto.delivery.DeliveryDTO;
 import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.dto.template.TemplateDTO;
 import com.rsreu.bestProject.dto.user.UserInfoDTO;
 import com.rsreu.bestProject.enums.TagProduct;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -46,6 +47,15 @@ public class DtoMapper {
         return modelMapper.map(template, TemplateDTO.class);
     }
 
+    public DeliveryDTO mapDeliveryToDto(Delivery delivery){
+        DeliveryDTO dto = modelMapper.map(delivery, DeliveryDTO.class);
+        dto.setConsumer(delivery.getConsumer());
+        dto.setFarmer(delivery.getFarmer());
+        dto.setDeliveryType(delivery.getDeliveryType());
+        dto.setDate(delivery.getDate().toEpochSecond());
+        return dto;
+    }
+
     public ProductDTO mapProductToDTO(Product product) {
         ProductDTO dto = modelMapper.map(product, ProductDTO.class);
 
@@ -54,6 +64,7 @@ public class DtoMapper {
         dto.setRating(RatingUtil.getAverage(product.getRating()));
         dto.setIdUser(product.getUserInfo().getId());
         dto.setDateRegistration(product.getDateRegistration().toEpochSecond());
+
 
         return dto;
     }

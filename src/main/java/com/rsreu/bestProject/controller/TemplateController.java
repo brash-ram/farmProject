@@ -25,7 +25,7 @@ public class TemplateController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<TemplateDTOResponse> delete(@RequestBody Long id) {
+    public ResponseEntity<TemplateDTOResponse> delete(@RequestParam Long id) {
         if(templateService.delete(id))
             return ResponseEntity.ok().build();
         else
