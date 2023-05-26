@@ -5,7 +5,9 @@ import java.util.Map;
 
 public enum RoleEnum {
     ADMIN(0),
-    USER(1);
+    USER(1),
+
+    FARMER(2);
 
     private final Integer id;
 
