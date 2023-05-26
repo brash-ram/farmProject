@@ -3,6 +3,7 @@ package com.rsreu.bestProject.controller;
 import com.rsreu.bestProject.dto.mark.AddMarkDTORequest;
 import com.rsreu.bestProject.dto.mark.ChangeMarkDTO;
 import com.rsreu.bestProject.dto.mark.DeleteMarkDTORequest;
+import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.dto.user.UserInfoDTO;
 import com.rsreu.bestProject.dto.user.request.*;
 import com.rsreu.bestProject.dto.user.response.UserInfoListDTOResponse;
@@ -108,7 +109,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/byId")
+    @PostMapping("/change/role/byId")
     public ResponseEntity<UserInfoDTO> updateRole(@RequestParam Long id) {
         return ResponseEntity.ok(dtoMapper.mapUserInfoToDto(userService.getById(id)));
     }
@@ -119,6 +120,11 @@ public class UserController {
             return ResponseEntity.ok().build();
         else
             return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("/byId")
+    public ResponseEntity<UserInfoDTO> getUser(@RequestParam Long id) {
+        return ResponseEntity.ok(dtoMapper.mapUserInfoToDto(userService.getById(id)));
     }
 
 }

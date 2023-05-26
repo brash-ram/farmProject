@@ -107,4 +107,8 @@ public class DeliveryService {
         return deliveryCalender;
 
     }
+
+    public DeliveryDTO getDeliveryDtoById(Long id) {
+        return dtoMapper.mapDeliveryToDto(deliveryRepository.findById(id).orElse(null));
+    }
 }

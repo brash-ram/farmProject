@@ -42,7 +42,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.my(user));
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<Void> delete(@RequestParam Long id) {
         productService.delete(id);
         return ResponseEntity.ok().build();
@@ -60,4 +60,11 @@ public class ProductController {
     public ResponseEntity<List<ProductDTO>> all() {
         return ResponseEntity.ok(productService.all());
     }
+
+    @GetMapping("/getProduct")
+    public ResponseEntity<ProductDTO> getById(@RequestParam Long id) {
+        return ResponseEntity.ok(productService.getProductDtoById(id));
+    }
+
+
 }

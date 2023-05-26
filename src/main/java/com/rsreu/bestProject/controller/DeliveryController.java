@@ -28,7 +28,7 @@ public class DeliveryController {
                 .body(dto);
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<DeliveryDTO> delete(@RequestParam Long id) {
         if(deliveryService.delete(id))
             return ResponseEntity.ok().build();
@@ -44,6 +44,11 @@ public class DeliveryController {
     @GetMapping("/calender")
     public ResponseEntity<Map<Long, List<ProductDTO>>> getDelivery(@RequestParam Long id){
         return ResponseEntity.ok(deliveryService.getDeliveries(id));
+    }
+
+    @GetMapping("/getCourse")
+    public ResponseEntity<DeliveryDTO> getById(@RequestParam Long id) {
+        return ResponseEntity.ok(deliveryService.getDeliveryDtoById(id));
     }
 
 }

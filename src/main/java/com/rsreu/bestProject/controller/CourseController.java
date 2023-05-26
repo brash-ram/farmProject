@@ -4,6 +4,7 @@ import com.rsreu.bestProject.dto.course.CourseDTO;
 import com.rsreu.bestProject.dto.course.request.AddCourseDTORequest;
 import com.rsreu.bestProject.dto.course.request.UpdateCourseDTORequest;
 import com.rsreu.bestProject.dto.course.response.CourseDTOResponse;
+import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.dto.template.TemplateDTO;
 import com.rsreu.bestProject.dto.template.response.TemplateDTOResponse;
 import com.rsreu.bestProject.service.CourseService;
@@ -28,7 +29,7 @@ public class CourseController {
                 .body(dto);
     }
 
-    @PostMapping("/deleteCourse")
+    @DeleteMapping("/deleteCourse")
     public ResponseEntity<Void> delete(@RequestParam Long id) {
         if(courseService.delete(id))
             return ResponseEntity.ok().build();
@@ -45,6 +46,11 @@ public class CourseController {
     @GetMapping("/allCoursers")
     public ResponseEntity<List<CourseDTO>> getAll(){
         return ResponseEntity.ok(courseService.getAll());
+    }
+
+    @GetMapping("/geCourse")
+    public ResponseEntity<CourseDTO> getById(@RequestParam Long id) {
+        return ResponseEntity.ok(courseService.getProductDtoById(id));
     }
 
 }

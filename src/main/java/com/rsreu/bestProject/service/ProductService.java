@@ -107,4 +107,10 @@ public class ProductService {
     public List<ProductDTO> my(UserInfo user) {
         return dtoMapper.mapProductsToDTO(productRepository.findAllByUserInfo(user));
     }
+
+    public ProductDTO getProductDtoById(Long id){
+        return dtoMapper.mapProductToDTO(getById(id));
+    }
+
+
 }

@@ -48,4 +48,8 @@ public class CourseService {
     public List<CourseDTO> getAll() {
         return dtoMapper.mapCoursersToDTO(courseRepository.findAll());
     }
+
+    public CourseDTO getProductDtoById(Long id) {
+        return dtoMapper.mapCourseToDTO(courseRepository.findById(id).orElse(null));
+    }
 }
