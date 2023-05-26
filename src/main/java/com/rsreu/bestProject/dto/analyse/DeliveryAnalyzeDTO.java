@@ -11,4 +11,5 @@ public class DeliveryAnalyzeDTO {
     private Long deliveryDate;
     private Long count;
     private Integer unit;
+    private String typeMessageName = "DeliveryAnalyzeDTO";
 }

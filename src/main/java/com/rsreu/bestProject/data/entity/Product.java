@@ -27,7 +27,6 @@ public class Product {
     @Column(name = "image")
     private String image;
 
-    @Lob
     @Column(name = "description", length=1000)
     private String description;
 

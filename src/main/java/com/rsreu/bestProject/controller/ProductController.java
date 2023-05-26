@@ -29,7 +29,8 @@ public class ProductController {
         productService.add(
                 addProductDTORequest,
                 request.getSession().getServletContext().getRealPath("/images/"),
-                AuthUtil.getUserFromContext(request)
+                //AuthUtil.getUserFromContext(request)
+                null
         );
 
         return null;

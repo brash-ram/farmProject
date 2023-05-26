@@ -12,4 +12,5 @@ public class ProductAnalyzeDTO {
     private String name;
     private String position;
     private Long dateRegistration;
+    private String typeMessageName = "ProductAnalyzeDTO";
 }
