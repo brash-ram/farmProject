@@ -43,7 +43,8 @@ public class DeliveryService {
                 .setAdressTo(deliveryDto.getAdressTo())
                 .setDate(OffsetDateTime.of(LocalDateTime.ofEpochSecond(deliveryDto.getDate(), 0, ZoneOffset.UTC), ZoneOffset.UTC))
                 .setPeriod(deliveryDto.getPeriod())
-                .setPaymentType(deliveryDto.getPaymentType());
+                .setPaymentType(deliveryDto.getPaymentType())
+                .setCount(deliveryDto.getCount());
 
         var product = productRepository.findById(deliveryDto.getProductId()).orElse(null);
         delivery.setProduct(product);
@@ -55,7 +56,7 @@ public class DeliveryService {
         delivery.setConsumer(consumer);
         deliveryRepository.save(delivery);
 
-        analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapDeliveryToAnalyze(delivery), AnalyzeMessageType.ADD));
+        analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapDeliveryToAnalyze(delivery, product), AnalyzeMessageType.ADD));
 
         return dtoMapper.mapDeliveryToDto(delivery);
     }
@@ -64,7 +65,7 @@ public class DeliveryService {
         Delivery delivery = deliveryRepository.findById(id).orElse(null);
         if(delivery != null){
             deliveryRepository.delete(delivery);
-            analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapDeliveryToAnalyze(delivery), AnalyzeMessageType.REMOVE));
+            analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapDeliveryToAnalyze(delivery, delivery.getProduct()), AnalyzeMessageType.REMOVE));
             return true;
         }
         return false;
@@ -79,7 +80,7 @@ public class DeliveryService {
                 .setPeriod(deliveryDto.getPeriod())
                 .setDeliveryType(deliveryDto.getDeliveryType());;
         deliveryRepository.save(delivery);
-        analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapDeliveryToAnalyze(delivery), AnalyzeMessageType.UPDATE));
+        analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapDeliveryToAnalyze(delivery, delivery.getProduct()), AnalyzeMessageType.UPDATE));
 
         return dtoMapper.mapDeliveryToDto(delivery);
     }

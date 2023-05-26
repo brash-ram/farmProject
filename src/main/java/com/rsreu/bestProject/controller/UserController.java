@@ -3,6 +3,7 @@ package com.rsreu.bestProject.controller;
 import com.rsreu.bestProject.dto.user.UserInfoDTO;
 import com.rsreu.bestProject.dto.user.request.*;
 import com.rsreu.bestProject.dto.user.response.UserInfoListDTOResponse;
+import com.rsreu.bestProject.security.AuthUtil;
 import com.rsreu.bestProject.service.UserService;
 import com.rsreu.bestProject.util.DtoMapper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -74,7 +75,7 @@ public class UserController {
 
     @GetMapping("/self")
     public ResponseEntity<UserInfoDTO> getCurrent(HttpServletRequest request){
-      return ResponseEntity.ofNullable(userService.getUserInfo(request.getUserPrincipal().getName()));
+      return ResponseEntity.ok(dtoMapper.mapUserInfoToDto(AuthUtil.getUserFromContext(request)));
     }
 
     @PutMapping("/change/password")

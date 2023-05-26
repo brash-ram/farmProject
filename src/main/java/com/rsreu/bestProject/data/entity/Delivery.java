@@ -36,6 +36,9 @@ public class Delivery {
     @Column(name = "period")
     private Long period;
 
+    @Column(name = "count")
+    private Long count;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;

@@ -96,16 +96,18 @@ public class DtoMapper {
     }
 
     public ProductAnalyzeDTO mapProductToAnalyze(Product product) {
-        ProductAnalyzeDTO dto = modelMapper.map(product, ProductAnalyzeDTO.class);
-        dto.setDateRegistration(product.getDateRegistration().toEpochSecond());
-        dto.setCategory(product.getCategory().getName());
-        return dto;
+        return new ProductAnalyzeDTO()
+                .setCategory(product.getCategory().getName())
+                .setName(product.getName())
+                .setPosition(product.getPosition())
+                .setDateRegistration(product.getDateRegistration().toEpochSecond());
     }
 
-    public DeliveryAnalyzeDTO mapDeliveryToAnalyze(Delivery delivery) {
-        DeliveryAnalyzeDTO dto = modelMapper.map(delivery, DeliveryAnalyzeDTO.class);
-        dto.setDeliveryDate(delivery.getDate().toEpochSecond());
-        dto.setUnit(delivery.getProduct().getUnit().getId());
-        return dto;
+    public DeliveryAnalyzeDTO mapDeliveryToAnalyze(Delivery delivery, Product product) {
+        return new DeliveryAnalyzeDTO()
+                .setCount(delivery.getCount())
+                .setDeliveryDate(delivery.getDeliveryType().getId())
+                .setUnit(delivery.getProduct().getUnit().getId())
+                .setProduct(mapProductToAnalyze(product));
     }
 }

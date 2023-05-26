@@ -41,7 +41,6 @@ public class JwtUtils {
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + config.jwt().expiration()))
                 .signWith(SignatureAlgorithm.HS512, config.jwt().secret())
                 .compact();
     }

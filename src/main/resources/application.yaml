@@ -74,7 +74,7 @@ app:
   salt: GigaSalt
   jwt:
     secret: GigaSecret
-    expiration: 14400000
+    expiration: 14400000000
     headerName: token
 
 

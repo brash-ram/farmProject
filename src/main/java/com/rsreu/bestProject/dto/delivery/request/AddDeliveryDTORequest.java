@@ -40,4 +40,7 @@ public class AddDeliveryDTORequest {
     @NotNull
     private PaymentType paymentType;
 
+    @NotNull
+    private Long count;
+
 }
