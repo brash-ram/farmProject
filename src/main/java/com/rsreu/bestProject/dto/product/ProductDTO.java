@@ -6,6 +6,7 @@ import com.rsreu.bestProject.enums.TagProduct;
 import com.rsreu.bestProject.enums.Unit;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class ProductDTO {
     private String image;
 
     @NotNull
+    @Size(max = 4000)
     private String description;
 
     @NotNull

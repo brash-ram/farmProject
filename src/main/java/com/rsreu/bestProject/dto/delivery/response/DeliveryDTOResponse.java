@@ -2,11 +2,12 @@ package com.rsreu.bestProject.dto.delivery.response;
 
 import com.rsreu.bestProject.enums.PaymentType;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class DeliveryDTOResponse {
     @NotNull

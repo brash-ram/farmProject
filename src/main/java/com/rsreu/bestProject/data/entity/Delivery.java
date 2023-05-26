@@ -54,5 +54,4 @@ public class Delivery {
     @Column(name = "payment_type")
     private PaymentType paymentType;
 
-
 }

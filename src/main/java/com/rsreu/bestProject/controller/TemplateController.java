@@ -18,7 +18,7 @@ public class TemplateController {
 
     @PostMapping("/add")
     public ResponseEntity<TemplateDTOResponse> add(@RequestBody TemplateDTORequest template) {
-        templateService.add(new TemplateEntity());
+        templateService.add(template);
         return ResponseEntity
                 .ok()
                 .body(new TemplateDTOResponse());
