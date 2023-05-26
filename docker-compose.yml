@@ -6,9 +6,9 @@ services:
         build:
             context: .
         ports:
-            - "8081:8080"
+            - "8080:8080"
         environment:
-            DB_URL: jdbc:postgresql://postgres:5432/bestProject
+            DB_URL: jdbc:postgresql://postgres:5432/farmProject
             RABBIT_HOST: rabbitmq
             PORT: 8080
         deploy:
