@@ -51,12 +51,12 @@ public class ProductService {
                 .setName(dto.getName())
                 .setDescription(dto.getDescription())
                 .setPriceBoard(dto.getPriceBoard())
-                .setTags(dto.getTags().stream().map(TagProduct::getById).toList())
+                .setTags(dto.getTags())
                 .setPrice(dto.getPrice())
                 .setTradePrice(dto.getTradePrice())
                 .setDateRegistration(OffsetDateTime.now())
                 .setUserInfo(user)
-                        .setUnit(Unit.getById(dto.getUnit()))
+                        .setUnit(dto.getUnit())
                 .setPosition(dto.getPosition());
         productRepository.save(product);
 
@@ -80,7 +80,7 @@ public class ProductService {
                 .setName(dto.getName())
                 .setDescription(dto.getDescription())
                 .setPriceBoard(dto.getPriceBoard())
-                .setTags(dto.getTags().stream().map(TagProduct::getById).toList())
+                .setTags(dto.getTags())
                 .setPrice(dto.getPrice())
                 .setTradePrice(dto.getTradePrice())
                         .setPosition(dto.getPosition());

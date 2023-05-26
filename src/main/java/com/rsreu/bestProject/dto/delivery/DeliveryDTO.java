@@ -1,5 +1,6 @@
 package com.rsreu.bestProject.dto.delivery;
 
+import com.rsreu.bestProject.enums.DeliveryType;
 import com.rsreu.bestProject.enums.Unit;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
@@ -17,7 +18,7 @@ public class DeliveryDTO {
     private Long id;
 
     @NotNull
-    private Integer deliveryType;
+    private DeliveryType deliveryType;
 
     @NotNull
     private Long date;

@@ -1,16 +1,13 @@
 package com.rsreu.bestProject.dto.delivery.request;
 
-import com.rsreu.bestProject.data.entity.UserInfo;
 import com.rsreu.bestProject.enums.DeliveryType;
-import com.rsreu.bestProject.enums.Unit;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.OffsetDateTime;
-
 @Data
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class AddDeliveryDTORequest {
     @NotNull

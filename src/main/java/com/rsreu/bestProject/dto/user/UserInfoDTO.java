@@ -1,5 +1,6 @@
 package com.rsreu.bestProject.dto.user;
 
+import com.rsreu.bestProject.enums.RoleEnum;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ public class UserInfoDTO {
     private Long id;
 
     @NotNull
-    private List<Integer> roles;
+    private List<RoleEnum> roles;
 
     @NotNull
     private Long dateRegistration;

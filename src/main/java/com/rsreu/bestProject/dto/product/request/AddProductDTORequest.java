@@ -1,5 +1,6 @@
 package com.rsreu.bestProject.dto.product.request;
 
+import com.rsreu.bestProject.enums.TagProduct;
 import com.rsreu.bestProject.enums.Unit;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -26,7 +27,7 @@ public class AddProductDTORequest {
     private String category;
 
     @NotNull
-    private List<Integer> tags;
+    private List<TagProduct> tags;
 
     @NotNull
     private String position;
@@ -51,5 +52,5 @@ public class AddProductDTORequest {
 
 
     @NotNull
-    private Integer unit;
+    private Unit unit;
 }

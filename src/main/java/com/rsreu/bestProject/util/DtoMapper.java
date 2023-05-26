@@ -1,10 +1,7 @@
 package com.rsreu.bestProject.util;
 
 
-import com.rsreu.bestProject.data.entity.Delivery;
-import com.rsreu.bestProject.data.entity.Product;
-import com.rsreu.bestProject.data.entity.TemplateEntity;
-import com.rsreu.bestProject.data.entity.UserInfo;
+import com.rsreu.bestProject.data.entity.*;
 import com.rsreu.bestProject.dto.analyse.ProductAnalyzeDTO;
 import com.rsreu.bestProject.dto.delivery.DeliveryDTO;
 import com.rsreu.bestProject.dto.product.ProductDTO;
@@ -51,7 +48,7 @@ public class DtoMapper {
 
     public UserInfoDTO mapUserInfoToDto(UserInfo userInfo) {
         UserInfoDTO userInfoDTO = modelMapper.map(userInfo, UserInfoDTO.class);
-        userInfoDTO.setRoles(userInfo.getRoles().stream().map(role -> role.getName().getId()).toList());
+        userInfoDTO.setRoles(userInfo.getRoles().stream().map(Role::getName).toList());
         userInfoDTO.setDateRegistration(userInfo.getDateRegistration().toEpochSecond());
         return userInfoDTO;
     }
@@ -64,7 +61,7 @@ public class DtoMapper {
         DeliveryDTO dto = modelMapper.map(delivery, DeliveryDTO.class);
         dto.setConsumerId(delivery.getConsumer().getId());
         dto.setFarmerId(delivery.getFarmer().getId());
-        dto.setDeliveryType(delivery.getDeliveryType().getId());
+        dto.setDeliveryType(delivery.getDeliveryType());
         dto.setDate(delivery.getDate().toEpochSecond());
         return dto;
     }
@@ -73,11 +70,11 @@ public class DtoMapper {
         ProductDTO dto = modelMapper.map(product, ProductDTO.class);
 
         dto.setCategory(product.getCategory().getName());
-        dto.setTags(product.getTags().stream().map(TagProduct::getId).toList());
+        dto.setTags(product.getTags());
         dto.setRating(RatingUtil.getAverage(product.getRating()));
         dto.setIdUser(product.getUserInfo().getId());
         dto.setDateRegistration(product.getDateRegistration().toEpochSecond());
-        dto.setUnit(product.getUnit().getId());
+        dto.setUnit(product.getUnit());
 
         return dto;
     }

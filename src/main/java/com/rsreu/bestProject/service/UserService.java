@@ -182,8 +182,7 @@ public class UserService {
         UserInfo userInfo = getById(dto.getId());
         userInfo.setRoles(dto.getRole()
                 .stream()
-                .map(RoleEnum::getById)
-                        .map(role -> roleRepository.findByName(role).get())
+                .map(role -> roleRepository.findByName(role).get())
                 .collect(Collectors.toSet())
         );
         return dtoMapper.mapUserInfoToDto(userInfo);

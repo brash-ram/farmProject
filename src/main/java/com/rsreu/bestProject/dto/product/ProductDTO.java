@@ -2,6 +2,7 @@ package com.rsreu.bestProject.dto.product;
 
 import com.rsreu.bestProject.data.entity.ProductCategory;
 import com.rsreu.bestProject.enums.TagProduct;
+import com.rsreu.bestProject.enums.Unit;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -30,7 +31,7 @@ public class ProductDTO {
     private String category;
 
     @NotNull
-    private List<Integer> tags;
+    private List<TagProduct> tags;
 
     @NotNull
     private String position;
@@ -57,5 +58,5 @@ public class ProductDTO {
     private Long dateRegistration;
 
     @NotNull
-    private Integer unit;
+    private Unit unit;
 }

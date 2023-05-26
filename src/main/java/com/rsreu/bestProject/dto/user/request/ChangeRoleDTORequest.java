@@ -1,5 +1,6 @@
 package com.rsreu.bestProject.dto.user.request;
 
+import com.rsreu.bestProject.enums.RoleEnum;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ChangeRoleDTORequest {
     @NotNull
-    private List<Integer> role;
+    private List<RoleEnum> role;
 
     @NotNull
     private Long id;
