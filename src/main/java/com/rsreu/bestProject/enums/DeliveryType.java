@@ -6,6 +6,7 @@ import java.util.Map;
 public enum DeliveryType {
 
     PICKUP(0),
+
     FARMER_DELIVERY(1),
 
     OUR_DELIVERY(2);

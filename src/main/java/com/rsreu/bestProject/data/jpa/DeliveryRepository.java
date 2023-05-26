@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
 
-
     List<Delivery> findAllByConsumer(UserInfo userInfo);
+
+    List<Delivery> findAllByProductPosition(String position);
 }

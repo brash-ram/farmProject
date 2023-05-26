@@ -43,6 +43,7 @@ public class DtoMapper {
             mp.skip(DeliveryDTO::setConsumerId);
             mp.skip(DeliveryDTO::setFarmerId);
             mp.skip(DeliveryDTO::setDate);
+            //mp.skip(DeliveryDTO::setProduct);
         });
 
         modelMapper.typeMap(Product.class, ProductAnalyzeDTO.class).addMappings(mp -> {
@@ -74,6 +75,7 @@ public class DtoMapper {
         dto.setFarmerId(delivery.getFarmer().getId());
         dto.setDeliveryType(delivery.getDeliveryType());
         dto.setDate(delivery.getDate().toEpochSecond());
+        dto.setProduct(mapProductToDTO(delivery.getProduct()));
         return dto;
     }
 

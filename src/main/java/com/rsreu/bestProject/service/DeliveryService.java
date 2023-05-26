@@ -108,6 +108,11 @@ public class DeliveryService {
 
     }
 
+    public List<DeliveryDTO> search(String position) {
+        List<Delivery> deliveries = deliveryRepository.findAllByProductPosition(position);
+        return deliveries.stream().map(dtoMapper::mapDeliveryToDto).toList();
+    }
+
     public DeliveryDTO getDeliveryDtoById(Long id) {
         return dtoMapper.mapDeliveryToDto(deliveryRepository.findById(id).orElse(null));
     }

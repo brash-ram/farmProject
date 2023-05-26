@@ -56,6 +56,11 @@ public class ProductController {
         return ResponseEntity.ok(productService.update(dto,  request.getSession().getServletContext().getRealPath("/images/")));
     }
 
+    @GetMapping("/api/product/categories")
+    public ResponseEntity<List<String>> getAllCategories() {
+        return ResponseEntity.ok(productService.getAllCategories());
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<ProductDTO>> all() {
         return ResponseEntity.ok(productService.all());

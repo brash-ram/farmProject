@@ -1,7 +1,9 @@
 package com.rsreu.bestProject.service;
 
 import com.rsreu.bestProject.data.entity.Product;
+import com.rsreu.bestProject.data.entity.ProductCategory;
 import com.rsreu.bestProject.data.entity.UserInfo;
+import com.rsreu.bestProject.data.jpa.ProductCategoryRepository;
 import com.rsreu.bestProject.data.jpa.ProductRepository;
 import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.dto.product.request.AddProductDTORequest;
@@ -27,6 +29,8 @@ public class ProductService {
     private final CategoryService categoryService;
 
     private final ProductRepository productRepository;
+
+    private final ProductCategoryRepository productCategoryRepository;
 
     private final DtoMapper dtoMapper;
 
@@ -99,6 +103,7 @@ public class ProductService {
         analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapProductToAnalyze(product), AnalyzeMessageType.REMOVE));
     }
 
+    @Transactional
     public Product getById(Long id) {
         return productRepository.findById(id).get();
     }
@@ -106,6 +111,10 @@ public class ProductService {
     @Transactional
     public List<ProductDTO> my(UserInfo user) {
         return dtoMapper.mapProductsToDTO(productRepository.findAllByUserInfo(user));
+    }
+
+    public List<String> getAllCategories() {
+        return productCategoryRepository.findAll().stream().map(ProductCategory::getName).toList();
     }
 
     public ProductDTO getProductDtoById(Long id){
