@@ -80,7 +80,7 @@ public class UserController {
       return ResponseEntity.ok(dtoMapper.mapUserInfoToDto(AuthUtil.getUserFromContext()));
     }
 
-    @PutMapping("/change/password")
+    @PostMapping("/change/password")
     public ResponseEntity<UserInfoDTO> changePassword(@RequestBody ChangePasswordDTORequest dto) {
         return ResponseEntity.ok(userService.updatePassword(dto));
     }
