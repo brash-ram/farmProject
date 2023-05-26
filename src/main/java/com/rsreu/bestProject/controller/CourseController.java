@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/course")
 @RequiredArgsConstructor
@@ -35,9 +37,14 @@ public class CourseController {
 
     }
 
-    @PutMapping("/updateCourse")
+    @PostMapping("/updateCourse")
     public ResponseEntity<CourseDTO> update(@RequestBody UpdateCourseDTORequest request) {
         return ResponseEntity.ok(courseService.update(request));
+    }
+
+    @GetMapping("/allCoursers")
+    public ResponseEntity<List<CourseDTO>> getAll(){
+        return ResponseEntity.ok(courseService.getAll());
     }
 
 }

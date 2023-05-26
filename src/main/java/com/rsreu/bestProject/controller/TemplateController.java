@@ -33,7 +33,7 @@ public class TemplateController {
 
     }
 
-    @PutMapping("/update")
+    @PostMapping("/update")
     public ResponseEntity<TemplateDTO> update(@RequestBody TemplateDTORequest request) {
         return ResponseEntity.ok(templateService.update(request));
     }

@@ -36,7 +36,7 @@ public class DeliveryController {
             return ResponseEntity.badRequest().build();
     }
 
-    @PutMapping("/update")
+    @PostMapping("/update")
     public ResponseEntity<DeliveryDTO> update(@RequestBody UpdateDeliveryDTORequest request) {
         return ResponseEntity.ok(deliveryService.update(request));
     }

@@ -4,13 +4,11 @@ package com.rsreu.bestProject.util;
 import com.rsreu.bestProject.data.entity.*;
 import com.rsreu.bestProject.dto.analyse.DeliveryAnalyzeDTO;
 import com.rsreu.bestProject.dto.analyse.ProductAnalyzeDTO;
-import com.rsreu.bestProject.dto.cart.CartDTOResponse;
 import com.rsreu.bestProject.dto.course.CourseDTO;
 import com.rsreu.bestProject.dto.delivery.DeliveryDTO;
 import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.dto.template.TemplateDTO;
 import com.rsreu.bestProject.dto.user.UserInfoDTO;
-import com.rsreu.bestProject.enums.TagProduct;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -114,8 +112,12 @@ public class DtoMapper {
                 .setProduct(mapProductToAnalyze(product));
     }
 
-    public CourseDTO mapCourseToDto(Course course){
+    public CourseDTO mapCourseToDTO(Course course){
         return modelMapper.map(course, CourseDTO.class);
+    }
+
+    public List<CourseDTO> mapCoursersToDTO(List<Course> courses) {
+        return courses.stream().map(this::mapCourseToDTO).toList();
     }
 
 }

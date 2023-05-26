@@ -5,10 +5,11 @@ import com.rsreu.bestProject.data.jpa.CourseRepository;
 import com.rsreu.bestProject.dto.course.CourseDTO;
 import com.rsreu.bestProject.dto.course.request.AddCourseDTORequest;
 import com.rsreu.bestProject.dto.course.request.UpdateCourseDTORequest;
-import com.rsreu.bestProject.dto.template.request.TemplateDTORequest;
 import com.rsreu.bestProject.util.DtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class CourseService {
                 .setHeader(request.getHeader())
                 .setLink(request.getLink());
         courseRepository.save(course);
-        return dtoMapper.mapCourseToDto(course);
+        return dtoMapper.mapCourseToDTO(course);
     }
 
     public boolean delete(Long id){
@@ -38,9 +39,13 @@ public class CourseService {
         Course course = new Course();
         course.setDescription(request.getHeader())
                 .setHeader(request.getHeader())
-                .setLink(request.getLink());
+                .setLink(request.getLink())
+                .setId(request.getId());
         courseRepository.save(course);
-        return dtoMapper.mapCourseToDto(course);
+        return dtoMapper.mapCourseToDTO(course);
     }
 
+    public List<CourseDTO> getAll() {
+        return dtoMapper.mapCoursersToDTO(courseRepository.findAll());
+    }
 }
