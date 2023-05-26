@@ -10,6 +10,8 @@ import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -48,6 +50,10 @@ public class UserInfo implements UserDetails {
     @NotNull
     @Column(name = "bio")
     private String bio;
+
+    @NotNull
+    @Column(name = "date_registration")
+    private OffsetDateTime dateRegistration;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

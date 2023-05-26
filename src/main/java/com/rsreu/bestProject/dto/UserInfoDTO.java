@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Data
@@ -27,4 +28,7 @@ public class UserInfoDTO {
 
     @NotNull
     private List<Integer> roles;
+
+    @NotNull
+    private OffsetDateTime dateRegistration;
 }

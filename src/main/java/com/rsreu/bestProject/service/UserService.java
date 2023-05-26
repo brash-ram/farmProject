@@ -28,6 +28,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -86,9 +87,10 @@ public class UserService {
         if (confirmEmail(signUp.getEmail(), signUp.getCode())) {
             UserInfo user = new UserInfo()
                     .setFullName(signUp.getFullName())
-                    .setPassword(passwordEncoder.encode(signUp.getPassword() + config.salt()))
+                    .setPassword(passwordEncoder.encode(signUp.getPassword()))
                     .setBio(signUp.getBio())
-                    .setEmail(signUp.getEmail());
+                    .setEmail(signUp.getEmail())
+                    .setDateRegistration(OffsetDateTime.now());
 
             Set<Role> roles = new HashSet<>();
 
@@ -137,13 +139,11 @@ public class UserService {
 
     @Transactional
     public Boolean signIn(String email, String password) {
-        //Optional<UserInfo> userInfo = userRepository.findByEmailAndPassword(email, passwordEncoder.encode(password + config.salt()));
-
-        var user = userRepository.findByEmail(email).orElse(null);
+        Optional<UserInfo> userInfo = userRepository.findByEmailAndPassword(email, passwordEncoder.encode(password));
 
 
-        if (user != null && user.getPassword().equals(password)) {
-
+        if (userInfo.isPresent()) {
+            var user = userInfo.get();
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())
             );
@@ -165,7 +165,10 @@ public class UserService {
 
     @Transactional
     public UserInfoListDTOResponse getAllUsers(){
-        return new UserInfoListDTOResponse(userRepository.findAll());
+        return new UserInfoListDTOResponse(userRepository.findAll()
+                .stream()
+                .map(dtoMapper::mapUserInfoToDto)
+                .collect(Collectors.toList()));
     }
 
     public UserInfoDTO getUserInfo(String name){
