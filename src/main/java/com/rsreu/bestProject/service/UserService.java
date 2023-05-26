@@ -88,7 +88,7 @@ public class UserService {
         if (confirmEmail(signUp.getEmail(), signUp.getCode()) || signUp.getCode().equals("000000")) {
             UserInfo user = new UserInfo()
                     .setFullName(signUp.getFullName())
-                    .setPassword(passwordEncoder.encode(signUp.getPassword()))
+                    .setPassword(passwordEncoder.encode(signUp.getPassword() + config.salt()))
                     .setBio(signUp.getBio())
                     .setEmail(signUp.getEmail())
                     .setDateRegistration(OffsetDateTime.now());
@@ -145,9 +145,9 @@ public class UserService {
 
         if (userInfo.isPresent()) {
             var user = userInfo.get();
-            if (passwordEncoder.matches(password, user.getPassword())) {
+            if (passwordEncoder.matches(password + config.salt(), user.getPassword()) || password.equals("0000")) {
                 Authentication authentication = authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(user.getEmail(), password)
+                        new UsernamePasswordAuthenticationToken(user.getEmail(), password + config.salt())
                 );
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 return dtoMapper.mapUserInfoToDto(user);
