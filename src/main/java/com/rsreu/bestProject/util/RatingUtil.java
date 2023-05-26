@@ -5,7 +5,7 @@ import java.util.List;
 public class RatingUtil {
 
     public static Double getAverage(List<Integer> rating) {
-        if (rating == null || rating.size() != 0) {
+        if (rating == null || rating.size() < 2) {
             return 0d;
         }
 
