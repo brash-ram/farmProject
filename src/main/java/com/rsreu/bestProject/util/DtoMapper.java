@@ -2,6 +2,7 @@ package com.rsreu.bestProject.util;
 
 
 import com.rsreu.bestProject.data.entity.*;
+import com.rsreu.bestProject.dto.analyse.DeliveryAnalyzeDTO;
 import com.rsreu.bestProject.dto.analyse.ProductAnalyzeDTO;
 import com.rsreu.bestProject.dto.delivery.DeliveryDTO;
 import com.rsreu.bestProject.dto.product.ProductDTO;
@@ -43,6 +44,12 @@ public class DtoMapper {
 
         modelMapper.typeMap(Product.class, ProductAnalyzeDTO.class).addMappings(mp -> {
             mp.skip(ProductAnalyzeDTO::setDateRegistration);
+            mp.skip(ProductAnalyzeDTO::setCategory);
+        });
+
+        modelMapper.typeMap(Delivery.class, DeliveryAnalyzeDTO.class).addMappings(mp -> {
+            mp.skip(DeliveryAnalyzeDTO::setDeliveryDate);
+            mp.skip(DeliveryAnalyzeDTO::setUnit);
         });
     }
 
@@ -86,6 +93,14 @@ public class DtoMapper {
     public ProductAnalyzeDTO mapProductToAnalyze(Product product) {
         ProductAnalyzeDTO dto = modelMapper.map(product, ProductAnalyzeDTO.class);
         dto.setDateRegistration(product.getDateRegistration().toEpochSecond());
+        dto.setCategory(product.getCategory().getName());
+        return dto;
+    }
+
+    public DeliveryAnalyzeDTO mapDeliveryToAnalyze(Delivery delivery) {
+        DeliveryAnalyzeDTO dto = modelMapper.map(delivery, DeliveryAnalyzeDTO.class);
+        dto.setDeliveryDate(delivery.getDate().toEpochSecond());
+        dto.setUnit(delivery.getProduct().getUnit().getId());
         return dto;
     }
 

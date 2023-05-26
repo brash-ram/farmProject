@@ -6,6 +6,8 @@ import com.rsreu.bestProject.data.jpa.ProductRepository;
 import com.rsreu.bestProject.data.jpa.UserRepository;
 import com.rsreu.bestProject.dto.delivery.DeliveryDTO;
 import com.rsreu.bestProject.dto.delivery.request.AddDeliveryDTORequest;
+import com.rsreu.bestProject.enums.AnalyzeMessageType;
+import com.rsreu.bestProject.util.AnalyzeUtil;
 import com.rsreu.bestProject.util.DtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ public class DeliveryService {
     private final UserRepository userRepository;
     private final DtoMapper dtoMapper;
 
+    private final Analyser analyser;
+
     public DeliveryDTO add(AddDeliveryDTORequest deliveryDto){
         Delivery delivery = new Delivery()
                 .setDeliveryType(deliveryDto.getDeliveryType())
@@ -31,6 +35,7 @@ public class DeliveryService {
                 .setAdressTo(deliveryDto.getAdressTo())
                 .setDate(OffsetDateTime.of(LocalDateTime.ofEpochSecond(deliveryDto.getDate(), 0, ZoneOffset.UTC), ZoneOffset.UTC))
                 .setPeriod(deliveryDto.getPeriod());
+
         var product = productRepository.findById(deliveryDto.getProductId()).orElse(null);
         delivery.setProduct(product);
 
@@ -40,6 +45,9 @@ public class DeliveryService {
         var consumer = userRepository.findById(deliveryDto.getConsumerId()).orElse(null);
         delivery.setConsumer(consumer);
         deliveryRepository.save(delivery);
+
+        analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapDeliveryToAnalyze(delivery), AnalyzeMessageType.ADD));
+
         return dtoMapper.mapDeliveryToDto(delivery);
     }
 
@@ -47,19 +55,22 @@ public class DeliveryService {
         Delivery delivery = deliveryRepository.findById(id).orElse(null);
         if(delivery != null){
             deliveryRepository.delete(delivery);
+            analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapDeliveryToAnalyze(delivery), AnalyzeMessageType.REMOVE));
             return true;
         }
         return false;
     }
 
     public DeliveryDTO update(AddDeliveryDTORequest deliveryDto){
-        var delivery = deliveryRepository.findById(deliveryDto.getId()).orElse(null);
+        var delivery = deliveryRepository.findById(deliveryDto.getId()).get();
         delivery.setDeliveryType(deliveryDto.getDeliveryType())
                 .setId(deliveryDto.getId())
                 .setAdressFrom(deliveryDto.getAdressFrom())
                 .setAdressTo(deliveryDto.getAdressTo())
                 .setDate(OffsetDateTime.of(LocalDateTime.ofEpochSecond(deliveryDto.getDate(), 0, ZoneOffset.UTC), ZoneOffset.UTC))
                 .setPeriod(deliveryDto.getPeriod());
+        deliveryRepository.save(delivery);
+        analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapDeliveryToAnalyze(delivery), AnalyzeMessageType.UPDATE));
         return dtoMapper.mapDeliveryToDto(delivery);
     }
 }

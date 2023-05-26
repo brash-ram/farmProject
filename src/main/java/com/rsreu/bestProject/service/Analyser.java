@@ -1,7 +1,6 @@
 package com.rsreu.bestProject.service;
 
 import com.rsreu.bestProject.dto.analyse.AnalyzeMessage;
-import com.rsreu.bestProject.dto.analyse.ProductAnalyzeDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;

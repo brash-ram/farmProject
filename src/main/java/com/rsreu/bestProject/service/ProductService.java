@@ -5,6 +5,7 @@ import com.rsreu.bestProject.data.entity.UserInfo;
 import com.rsreu.bestProject.data.jpa.ProductRepository;
 import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.dto.product.request.AddProductDTORequest;
+import com.rsreu.bestProject.dto.product.request.UpdateProductDTORequest;
 import com.rsreu.bestProject.enums.AnalyzeMessageType;
 import com.rsreu.bestProject.util.AnalyzeUtil;
 import com.rsreu.bestProject.util.DtoMapper;
@@ -63,21 +64,23 @@ public class ProductService {
         return dtoMapper.mapProductsToDTO(productRepository.findAll());
     }
 
-    public ProductDTO update(AddProductDTORequest dto, String imaegs) {
+    public ProductDTO update(UpdateProductDTORequest dto, String imaegs) {
         String filePath = "";
         if (dto.getImage() != null) {
             filePath = fileUtil.save(dto.getImage(), imaegs);
         }
         Product product = new Product()
+                .setId(dto.getIdProduct())
                 .setImage(filePath)
-                .setCategory(categoryService.getByName(dto.getName()))
+                .setCategory(categoryService.getByName(dto.getCategory()))
                 .setName(dto.getName())
                 .setDescription(dto.getDescription())
                 .setPriceBoard(dto.getPriceBoard())
                 .setTags(dto.getTags())
                 .setPrice(dto.getPrice())
                 .setTradePrice(dto.getTradePrice())
-                        .setPosition(dto.getPosition());
+                .setUnit(dto.getUnit())
+                .setPosition(dto.getPosition());
         productRepository.save(product);
 
         analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapProductToAnalyze(product), AnalyzeMessageType.UPDATE));
