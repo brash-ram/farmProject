@@ -29,7 +29,7 @@ services:
         environment:
             - POSTGRES_USER=username
             - POSTGRES_PASSWORD=password
-            - POSTGRES_DB=bestProject
+            - POSTGRES_DB=farmProject
         restart: always
         networks:
             - backend
