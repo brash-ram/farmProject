@@ -11,6 +11,7 @@ import com.rsreu.bestProject.enums.AnalyzeMessageType;
 import com.rsreu.bestProject.util.AnalyzeUtil;
 import com.rsreu.bestProject.dto.delivery.request.UpdateDeliveryDTORequest;
 import com.rsreu.bestProject.dto.product.ProductDTO;
+import com.rsreu.bestProject.util.DateUtils;
 import com.rsreu.bestProject.util.DtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -74,7 +75,7 @@ public class DeliveryService {
         delivery.setDeliveryType(deliveryDto.getDeliveryType())
                 .setAdressFrom(deliveryDto.getAdressFrom())
                 .setAdressTo(deliveryDto.getAdressTo())
-                .setDate(OffsetDateTime.of(LocalDateTime.ofEpochSecond(deliveryDto.getDate(), 0, ZoneOffset.UTC), ZoneOffset.UTC))
+                .setDate(DateUtils.parse(deliveryDto.getDate()))
                 .setPeriod(deliveryDto.getPeriod())
                 .setDeliveryType(deliveryDto.getDeliveryType());;
         deliveryRepository.save(delivery);

@@ -8,6 +8,7 @@ import com.rsreu.bestProject.dto.product.request.AddProductDTORequest;
 import com.rsreu.bestProject.dto.product.request.UpdateProductDTORequest;
 import com.rsreu.bestProject.enums.AnalyzeMessageType;
 import com.rsreu.bestProject.util.AnalyzeUtil;
+import com.rsreu.bestProject.util.DateUtils;
 import com.rsreu.bestProject.util.DtoMapper;
 import com.rsreu.bestProject.util.FileUtil;
 import jakarta.transaction.Transactional;
@@ -51,8 +52,10 @@ public class ProductService {
                 .setTradePrice(dto.getTradePrice())
                 .setDateRegistration(OffsetDateTime.now())
                 .setUserInfo(user)
-                        .setUnit(dto.getUnit())
-                .setPosition(dto.getPosition());
+                .setUnit(dto.getUnit())
+                .setPosition(dto.getPosition())
+                        .setStartSales(DateUtils.parse(dto.getStartSales()))
+                        .setEndSales(DateUtils.parse(dto.getEndSales()));
         productRepository.save(product);
 
         analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapProductToAnalyze(product), AnalyzeMessageType.ADD));
@@ -80,7 +83,9 @@ public class ProductService {
                 .setPrice(dto.getPrice())
                 .setTradePrice(dto.getTradePrice())
                 .setUnit(dto.getUnit())
-                .setPosition(dto.getPosition());
+                .setPosition(dto.getPosition())
+                .setStartSales(DateUtils.parse(dto.getStartSales()))
+                .setEndSales(DateUtils.parse(dto.getEndSales()));
         productRepository.save(product);
 
         analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapProductToAnalyze(product), AnalyzeMessageType.UPDATE));
