@@ -53,4 +53,11 @@ public class AddProductDTORequest {
 
     @NotNull
     private Unit unit;
+
+    @NotNull
+    private Long startSales;
+
+    @NotNull
+    private Long endSales;
+
 }
