@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface TemplateRepository extends JpaRepository<TemplateEntity, Long> {
 
-    Optional<TemplateEntity> findByName(String name);
+
 }

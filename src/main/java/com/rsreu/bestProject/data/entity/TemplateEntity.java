@@ -17,7 +17,4 @@ public class TemplateEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
-
 }

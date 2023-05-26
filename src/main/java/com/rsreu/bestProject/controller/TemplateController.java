@@ -1,14 +1,11 @@
 package com.rsreu.bestProject.controller;
 
 import com.rsreu.bestProject.data.entity.TemplateEntity;
-import com.rsreu.bestProject.dto.user.UserInfoDTO;
-import com.rsreu.bestProject.dto.user.request.*;
-import com.rsreu.bestProject.dto.user.response.TemplateDTOResponse;
-import com.rsreu.bestProject.dto.user.response.UserInfoListDTOResponse;
-import com.rsreu.bestProject.dto.user.response.UserNameDTOResponse;
+import com.rsreu.bestProject.dto.template.TemplateDTO;
+import com.rsreu.bestProject.dto.template.request.TemplateDTORequest;
+import com.rsreu.bestProject.dto.template.response.TemplateDTOResponse;
 import com.rsreu.bestProject.service.TemplateService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +17,7 @@ public class TemplateController {
     private final TemplateService templateService;
 
     @PostMapping("/add")
-    public ResponseEntity<TemplateDTOResponse> simpleSignUp(@RequestBody TemplateDTORequest template) {
+    public ResponseEntity<TemplateDTOResponse> add(@RequestBody TemplateDTORequest template) {
         templateService.add(new TemplateEntity());
         return ResponseEntity
                 .ok()
@@ -28,15 +25,17 @@ public class TemplateController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<TemplateDTOResponse> signUp(@RequestBody SignUpDTORequest signUp) {
-        if(templateService.delete(new TemplateEntity());
-        HttpHeaders httpHeaders = templateService.getAuthorizeHeader(signUp.getEmail());
-        return ResponseEntity.ok().headers(httpHeaders).body(response);
+    public ResponseEntity<TemplateDTOResponse> delete(@RequestBody Long id) {
+        if(templateService.delete(id))
+            return ResponseEntity.ok().build();
+        else
+            return ResponseEntity.badRequest().build();
+
     }
 
-    @PutMapping("/change/update")
-    public ResponseEntity<UserInfoDTO> updateUser(@RequestBody UpdateUserDTORequest info) {
-        return ResponseEntity.ok(templateService.updateUser(info));
+    @PutMapping("/update")
+    public ResponseEntity<TemplateDTO> update(@RequestBody TemplateDTORequest request) {
+        return ResponseEntity.ok(templateService.update(request));
     }
 
 }

@@ -1,4 +1,4 @@
-package com.rsreu.bestProject.dto.user.response;
+package com.rsreu.bestProject.dto.template.response;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
