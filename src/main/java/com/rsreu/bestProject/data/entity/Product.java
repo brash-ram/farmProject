@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -39,7 +40,7 @@ public class Product {
     @Column(name = "tags")
     @ElementCollection
     @CollectionTable(name = "product_rating", joinColumns = @JoinColumn(name = "product_id"))
-    private List<TagProduct> tags;
+    private List<TagProduct> tags = new ArrayList<>();
 
     @Column(name = "position")
     private String position;
@@ -47,7 +48,7 @@ public class Product {
     @Column(name = "rating")
     @ElementCollection
     @CollectionTable(name = "product_rating", joinColumns = @JoinColumn(name = "product_id"))
-    private List<Integer> rating;
+    private List<Integer> rating = new ArrayList<>();
 
     @Column(name = "price")
     @Min(0)
