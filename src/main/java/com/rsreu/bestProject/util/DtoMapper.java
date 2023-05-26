@@ -43,6 +43,10 @@ public class DtoMapper {
             mp.skip(DeliveryDTO::setFarmerId);
             mp.skip(DeliveryDTO::setDate);
         });
+
+        modelMapper.typeMap(Product.class, ProductAnalyzeDTO.class).addMappings(mp -> {
+            mp.skip(ProductAnalyzeDTO::setDateRegistration);
+        });
     }
 
     public UserInfoDTO mapUserInfoToDto(UserInfo userInfo) {
@@ -83,7 +87,9 @@ public class DtoMapper {
     }
 
     public ProductAnalyzeDTO mapProductToAnalyze(Product product) {
-        return modelMapper.map(product, ProductAnalyzeDTO.class);
+        ProductAnalyzeDTO dto = modelMapper.map(product, ProductAnalyzeDTO.class);
+        dto.setDateRegistration(product.getDateRegistration().toEpochSecond());
+        return dto;
     }
 
 }

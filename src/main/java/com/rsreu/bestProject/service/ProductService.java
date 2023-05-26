@@ -9,12 +9,14 @@ import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.dto.product.request.AddProductDTORequest;
 import com.rsreu.bestProject.enums.AnalyzeMessageType;
 import com.rsreu.bestProject.enums.TagProduct;
+import com.rsreu.bestProject.enums.Unit;
 import com.rsreu.bestProject.security.AuthUtil;
 import com.rsreu.bestProject.util.AnalyzeUtil;
 import com.rsreu.bestProject.util.DtoMapper;
 import com.rsreu.bestProject.util.FileUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
@@ -34,12 +36,15 @@ public class ProductService {
 
     private final Analyser analyser;
 
+    private final UserService userService;
+
     @Transactional
     public ProductDTO add(AddProductDTORequest dto, String pathToImage, UserInfo user) {
         String filePath = "";
         if (dto.getImage() != null) {
             filePath = fileUtil.save(dto.getImage(), pathToImage);
         }
+        user = userService.getById(dto.getFarmerId());
         Product product = new Product()
                 .setImage(filePath)
                 .setCategory(categoryService.getByName(dto.getCategory()))
@@ -50,7 +55,8 @@ public class ProductService {
                 .setPrice(dto.getPrice())
                 .setTradePrice(dto.getTradePrice())
                 .setDateRegistration(OffsetDateTime.now())
-                .setUserInfo(user);
+                .setUserInfo(user)
+                        .setUnit(Unit.getById(dto.getUnit()));
         productRepository.save(product);
 
         analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapProductToAnalyze(product), AnalyzeMessageType.ADD));

@@ -1,5 +1,6 @@
 package com.rsreu.bestProject.dto.product.request;
 
+import com.rsreu.bestProject.enums.Unit;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -47,4 +48,8 @@ public class AddProductDTORequest {
 
     @NotNull
     private Long dateRegistration;
+
+
+    @NotNull
+    private Integer unit;
 }

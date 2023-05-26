@@ -2,6 +2,7 @@ package com.rsreu.bestProject.dto.delivery.request;
 
 import com.rsreu.bestProject.data.entity.UserInfo;
 import com.rsreu.bestProject.enums.DeliveryType;
+import com.rsreu.bestProject.enums.Unit;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,5 +39,7 @@ public class AddDeliveryDTORequest {
 
     @NotNull
     private Long consumerId;
+
+
 
 }

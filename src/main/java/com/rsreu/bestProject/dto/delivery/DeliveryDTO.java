@@ -1,5 +1,9 @@
 package com.rsreu.bestProject.dto.delivery;
 
+import com.rsreu.bestProject.enums.Unit;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,6 +39,9 @@ public class DeliveryDTO {
 
     @NotNull
     private  Long farmerId;
+
+    @NotNull
+    private Unit unit;
 
 
 
