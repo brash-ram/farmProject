@@ -50,7 +50,7 @@ public class ProductService {
         return dtoMapper.mapProductsToDTO(productRepository.findAll());
     }
 
-    public ProductDTO update(AddProductDTORequest request) {
-        return null;
+    public ProductDTO update(AddProductDTORequest request, String imaegs) {
+        return add(request, imaegs);
     }
 }

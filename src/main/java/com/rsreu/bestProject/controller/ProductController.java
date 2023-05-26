@@ -38,8 +38,11 @@ public class ProductController {
 //    }
 
     @PutMapping("/update")
-    public ResponseEntity<ProductDTO> update(@RequestBody AddProductDTORequest request) {
-        return ResponseEntity.ok(productService.update(request));
+    public ResponseEntity<ProductDTO> update(
+            @RequestBody AddProductDTORequest dto,
+            HttpServletRequest request
+    ) {
+        return ResponseEntity.ok(productService.update(dto,  request.getSession().getServletContext().getRealPath("/images/")));
     }
 
     @GetMapping("/all")
