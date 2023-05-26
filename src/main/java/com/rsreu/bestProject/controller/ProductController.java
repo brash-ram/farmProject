@@ -29,7 +29,7 @@ public class ProductController {
         productService.add(
                 addProductDTORequest,
                 request.getSession().getServletContext().getRealPath("/images/"),
-                AuthUtil.getUserFromRequest(request)
+                AuthUtil.getUserFromContext(request)
         );
 
         return null;
@@ -37,7 +37,7 @@ public class ProductController {
 
     @PostMapping("/my")
     public ResponseEntity<List<ProductDTO>> myProducts(HttpServletRequest request) {
-        UserInfo user = AuthUtil.getUserFromRequest(request);
+        UserInfo user = AuthUtil.getUserFromContext(request);
         return ResponseEntity.ok(productService.my(user));
     }
 
