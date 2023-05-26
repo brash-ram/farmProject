@@ -139,7 +139,7 @@ public class UserService {
     }
 
     @Transactional
-    public Boolean signIn(String email, String password) {
+    public UserInfoDTO signIn(String email, String password) {
         Optional<UserInfo> userInfo = userRepository.findByEmail(email);
 
         if (userInfo.isPresent()) {
@@ -149,10 +149,10 @@ public class UserService {
                         new UsernamePasswordAuthenticationToken(user.getEmail(), password)
                 );
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                return true;
+                return dtoMapper.mapUserInfoToDto(user);
             }
         }
-        return false;
+        return null;
     }
 
     @Transactional

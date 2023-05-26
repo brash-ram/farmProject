@@ -25,6 +25,14 @@ public class DtoMapper {
             mp.skip(UserInfoDTO::setRoles);
             mp.skip(UserInfoDTO::setDateRegistration);
         });
+
+        modelMapper.typeMap(Product.class, ProductDTO.class).addMappings(mp -> {
+            mp.skip(ProductDTO::setCategory);
+            mp.skip(ProductDTO::setTags);
+            mp.skip(ProductDTO::setRating);
+            mp.skip(ProductDTO::setIdUser);
+            mp.skip(ProductDTO::setDateRegistration);
+        });
     }
 
     public UserInfoDTO mapUserInfoToDto(UserInfo userInfo) {
@@ -35,8 +43,7 @@ public class DtoMapper {
     }
 
     public TemplateDTO mapTemlateDto(TemplateEntity template){
-        TemplateDTO templateDTO = modelMapper.map(template, TemplateDTO.class);
-        return templateDTO;
+        return modelMapper.map(template, TemplateDTO.class);
     }
 
     public ProductDTO mapProductToDTO(Product product) {
@@ -45,6 +52,8 @@ public class DtoMapper {
         dto.setCategory(product.getCategory().getName());
         dto.setTags(product.getTags().stream().map(TagProduct::getId).toList());
         dto.setRating(RatingUtil.getAverage(product.getRating()));
+        dto.setIdUser(product.getUserInfo().getId());
+        dto.setDateRegistration(product.getDateRegistration().toEpochSecond());
 
         return dto;
     }

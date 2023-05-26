@@ -28,14 +28,11 @@ public class ProductController {
         return null;
     }
 
-//    @PostMapping("/delete")
-//    public ResponseEntity<TemplateDTOResponse> delete(@RequestParam Long id) {
-//        if(productService.delete(id))
-//            return ResponseEntity.ok().build();
-//        else
-//            return ResponseEntity.badRequest().build();
-//
-//    }
+    @PostMapping("/delete")
+    public ResponseEntity<Void> delete(@RequestParam Long id) {
+        productService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 
     @PutMapping("/update")
     public ResponseEntity<ProductDTO> update(

@@ -49,4 +49,10 @@ public class ProductDTO {
     @Min(0)
     @NotNull
     private Long priceBoard;
+
+    @NotNull
+    private Long idUser;
+
+    @NotNull
+    private Long dateRegistration;
 }

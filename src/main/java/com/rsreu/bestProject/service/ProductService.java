@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -40,7 +41,8 @@ public class ProductService {
                 .setPriceBoard(dto.getPriceBoard())
                 .setTags(dto.getTags().stream().map(TagProduct::getById).toList())
                 .setPrice(dto.getPrice())
-                .setTradePrice(dto.getTradePrice());
+                .setTradePrice(dto.getTradePrice())
+                .setDateRegistration(OffsetDateTime.now());
         productRepository.save(product);
         return dtoMapper.mapProductToDTO(product);
     }
@@ -52,5 +54,15 @@ public class ProductService {
 
     public ProductDTO update(AddProductDTORequest request, String imaegs) {
         return add(request, imaegs);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Product product = getById(id);
+        productRepository.delete(product);
+    }
+
+    public Product getById(Long id) {
+        return productRepository.findById(id).get();
     }
 }

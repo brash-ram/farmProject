@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Data
@@ -61,5 +62,8 @@ public class Product {
 
     @ManyToOne()
     private UserInfo userInfo;
+
+    @Column(name = "date_registration")
+    private OffsetDateTime dateRegistration;
 
 }

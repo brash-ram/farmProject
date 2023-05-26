@@ -3,7 +3,6 @@ package com.rsreu.bestProject.controller;
 import com.rsreu.bestProject.dto.user.UserInfoDTO;
 import com.rsreu.bestProject.dto.user.request.*;
 import com.rsreu.bestProject.dto.user.response.UserInfoListDTOResponse;
-import com.rsreu.bestProject.dto.user.response.UserNameDTOResponse;
 import com.rsreu.bestProject.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -49,11 +48,11 @@ public class UserController {
     }
 
     @PostMapping("/signIn")
-    public ResponseEntity<UserNameDTOResponse> signIn(@RequestBody AuthDTORequest request) {
-        boolean confirm = userService.signIn(request.getEmail(), request.getPassword());
-        if (confirm) {
+    public ResponseEntity<UserInfoDTO> signIn(@RequestBody SignInDTORequest request) {
+        UserInfoDTO dto = userService.signIn(request.getEmail(), request.getPassword());
+        if (dto != null) {
             HttpHeaders httpHeaders = userService.getAuthorizeHeader(request.getEmail());
-            return ResponseEntity.ok().headers(httpHeaders).build();
+            return ResponseEntity.ok().headers(httpHeaders).body(dto);
         } else {
             return ResponseEntity.badRequest().build();
         }
