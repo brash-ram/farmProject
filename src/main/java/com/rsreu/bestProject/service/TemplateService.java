@@ -14,8 +14,14 @@ public class TemplateService {
         templateRepository.save(entity);
     }
 
-    public void delete(TemplateEntity entity){
-        templateRepository.delete(entity);
+    public boolean delete(Long id){
+        TemplateEntity template = templateRepository.findById(id).orElse(null);
+        if(template != null){
+            templateRepository.delete(template);
+            return true;
+        }
+        return false;
+
     }
 
     public void edit(TemplateEntity entity){
