@@ -1,5 +1,6 @@
-package com.rsreu.bestProject.dto.request;
+package com.rsreu.bestProject.dto.user.response;
 
+import com.rsreu.bestProject.dto.user.UserInfoDTO;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,10 +11,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChangeRoleDTORequest {
+public class UserInfoListDTOResponse {
     @NotNull
-    private List<Integer> role;
-
-    @NotNull
-    private Long id;
+    private List<UserInfoDTO> usersList;
 }

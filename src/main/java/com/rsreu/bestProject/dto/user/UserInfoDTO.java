@@ -1,4 +1,4 @@
-package com.rsreu.bestProject.dto;
+package com.rsreu.bestProject.dto.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

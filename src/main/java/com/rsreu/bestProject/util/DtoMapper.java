@@ -2,7 +2,7 @@ package com.rsreu.bestProject.util;
 
 
 import com.rsreu.bestProject.data.entity.UserInfo;
-import com.rsreu.bestProject.dto.UserInfoDTO;
+import com.rsreu.bestProject.dto.user.UserInfoDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

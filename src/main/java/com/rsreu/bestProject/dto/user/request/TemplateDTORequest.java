@@ -1,4 +1,4 @@
-package com.rsreu.bestProject.dto.request;
+package com.rsreu.bestProject.dto.user.request;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

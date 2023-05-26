@@ -1,4 +1,4 @@
-package com.rsreu.bestProject.dto.response;
+package com.rsreu.bestProject.dto.user.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserNameDTOResponse {
+public class ChangePasswordDTORequest {
     @NotNull
-    private String fullName;
+    private Long id;
+
+    @NotNull
+    private String password;
 }

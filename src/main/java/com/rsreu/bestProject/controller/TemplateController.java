@@ -1,13 +1,12 @@
 package com.rsreu.bestProject.controller;
 
 import com.rsreu.bestProject.data.entity.TemplateEntity;
-import com.rsreu.bestProject.dto.UserInfoDTO;
-import com.rsreu.bestProject.dto.request.*;
-import com.rsreu.bestProject.dto.response.TemplateDTOResponse;
-import com.rsreu.bestProject.dto.response.UserInfoListDTOResponse;
-import com.rsreu.bestProject.dto.response.UserNameDTOResponse;
+import com.rsreu.bestProject.dto.user.UserInfoDTO;
+import com.rsreu.bestProject.dto.user.request.*;
+import com.rsreu.bestProject.dto.user.response.TemplateDTOResponse;
+import com.rsreu.bestProject.dto.user.response.UserInfoListDTOResponse;
+import com.rsreu.bestProject.dto.user.response.UserNameDTOResponse;
 import com.rsreu.bestProject.service.TemplateService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
