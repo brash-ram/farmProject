@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -15,10 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class AddProductDTORequest {
     @NotNull
-    private Long id;
-
-    @NotNull
-    private String image;
+    private MultipartFile image;
 
     @NotNull
     private String description;
@@ -27,16 +25,13 @@ public class AddProductDTORequest {
     private String name;
 
     @NotNull
-    private ProductCategory category;
+    private String category;
 
     @NotNull
-    private List<TagProduct> tags;
+    private List<Integer> tags;
 
     @NotNull
     private String position;
-
-    @NotNull
-    private Double rating;
 
     @Min(0)
     @NotNull

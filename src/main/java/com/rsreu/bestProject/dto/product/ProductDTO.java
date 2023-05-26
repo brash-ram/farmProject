@@ -27,10 +27,10 @@ public class ProductDTO {
     private String name;
 
     @NotNull
-    private ProductCategory category;
+    private String category;
 
     @NotNull
-    private List<TagProduct> tags;
+    private List<Integer> tags;
 
     @NotNull
     private String position;
