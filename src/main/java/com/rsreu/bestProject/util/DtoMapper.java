@@ -4,6 +4,7 @@ package com.rsreu.bestProject.util;
 import com.rsreu.bestProject.data.entity.*;
 import com.rsreu.bestProject.dto.analyse.DeliveryAnalyzeDTO;
 import com.rsreu.bestProject.dto.analyse.ProductAnalyzeDTO;
+import com.rsreu.bestProject.dto.cart.CartDTOResponse;
 import com.rsreu.bestProject.dto.delivery.DeliveryDTO;
 import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.dto.template.TemplateDTO;
@@ -33,6 +34,8 @@ public class DtoMapper {
             mp.skip(ProductDTO::setIdUser);
             mp.skip(ProductDTO::setDateRegistration);
             mp.skip(ProductDTO::setUnit);
+            mp.skip(ProductDTO::setEndSales);
+            mp.skip(ProductDTO::setStartSales);
         });
 
         modelMapper.typeMap(Delivery.class, DeliveryDTO.class).addMappings(mp -> {
@@ -82,6 +85,8 @@ public class DtoMapper {
         dto.setIdUser(product.getUserInfo().getId());
         dto.setDateRegistration(product.getDateRegistration().toEpochSecond());
         dto.setUnit(product.getUnit());
+        dto.setStartSales(product.getStartSales().toEpochSecond());
+        dto.setEndSales(product.getStartSales().toEpochSecond());
 
         return dto;
     }
@@ -103,5 +108,4 @@ public class DtoMapper {
         dto.setUnit(delivery.getProduct().getUnit().getId());
         return dto;
     }
-
 }

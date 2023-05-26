@@ -58,5 +58,11 @@ public class ProductDTO {
     private Long dateRegistration;
 
     @NotNull
+    private Long startSales;
+
+    @NotNull
+    private Long endSales;
+
+    @NotNull
     private Unit unit;
 }

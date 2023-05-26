@@ -27,8 +27,8 @@ public class Product {
     @Column(name = "image")
     private String image;
 
-    @Column(name = "description")
     @Lob
+    @Column(name = "description", length=1000)
     private String description;
 
     @Column(name = "name")
@@ -71,5 +71,11 @@ public class Product {
 
     @Column(name = "date_registration")
     private OffsetDateTime dateRegistration;
+
+    @Column(name = "start_sales")
+    private OffsetDateTime startSales;
+
+    @Column(name = "end_sales")
+    private OffsetDateTime endSales;
 
 }

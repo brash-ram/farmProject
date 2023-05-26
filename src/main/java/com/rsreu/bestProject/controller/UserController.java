@@ -4,6 +4,7 @@ import com.rsreu.bestProject.dto.user.UserInfoDTO;
 import com.rsreu.bestProject.dto.user.request.*;
 import com.rsreu.bestProject.dto.user.response.UserInfoListDTOResponse;
 import com.rsreu.bestProject.service.UserService;
+import com.rsreu.bestProject.util.DtoMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+
+    private final DtoMapper dtoMapper;
 
     @PostMapping("/signUp/sendEmail")
     public ResponseEntity<Boolean> simpleSignUp(@RequestBody SendEmailDTORequest sendEmailDTORequest) {
@@ -82,6 +85,11 @@ public class UserController {
     @PostMapping("/change/role")
     public ResponseEntity<UserInfoDTO> updateRole(@RequestBody ChangeRoleDTORequest changeRoleDTORequest) {
         return ResponseEntity.ok(userService.updateRoles(changeRoleDTORequest));
+    }
+
+    @PostMapping("/byId")
+    public ResponseEntity<UserInfoDTO> updateRole(@RequestParam Long id) {
+        return ResponseEntity.ok(dtoMapper.mapUserInfoToDto(userService.getById(id)));
     }
 
     @DeleteMapping("/deleteUser")
