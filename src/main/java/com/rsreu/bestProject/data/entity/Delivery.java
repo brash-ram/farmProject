@@ -1,6 +1,7 @@
 package com.rsreu.bestProject.data.entity;
 
 import com.rsreu.bestProject.enums.DeliveryType;
+import com.rsreu.bestProject.enums.PaymentType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -47,6 +48,8 @@ public class Delivery {
     @JoinColumn(name = "farmer_id")
     private  UserInfo farmer;
 
+    @Column(name = "payment_type")
+    private PaymentType paymentType;
 
 
 }

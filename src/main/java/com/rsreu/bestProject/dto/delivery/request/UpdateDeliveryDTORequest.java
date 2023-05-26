@@ -1,11 +1,7 @@
-package com.rsreu.bestProject.dto.delivery;
+package com.rsreu.bestProject.dto.delivery.request;
 
 import com.rsreu.bestProject.enums.DeliveryType;
 import com.rsreu.bestProject.enums.PaymentType;
-import com.rsreu.bestProject.enums.Unit;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeliveryDTO {
+public class UpdateDeliveryDTORequest {
     @NotNull
     private Long id;
 
@@ -37,13 +33,11 @@ public class DeliveryDTO {
     private Long productId;
 
     @NotNull
+    private Long farmerId;
+
+    @NotNull
     private Long consumerId;
 
     @NotNull
-    private  Long farmerId;
-
-    @NotNull
     private PaymentType paymentType;
-
-
 }

@@ -1,6 +1,8 @@
 package com.rsreu.bestProject.dto.delivery.request;
 
 import com.rsreu.bestProject.enums.DeliveryType;
+import com.rsreu.bestProject.enums.PaymentType;
+import com.rsreu.bestProject.enums.Unit;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,8 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddDeliveryDTORequest {
-    @NotNull
-    private Long id;
 
     @NotNull
     private DeliveryType deliveryType;
@@ -37,6 +37,7 @@ public class AddDeliveryDTORequest {
     @NotNull
     private Long consumerId;
 
-
+    @NotNull
+    private PaymentType paymentType;
 
 }

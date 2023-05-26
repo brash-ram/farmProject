@@ -1,6 +1,7 @@
 package com.rsreu.bestProject.service;
 
 import com.rsreu.bestProject.data.entity.Delivery;
+import com.rsreu.bestProject.data.entity.Product;
 import com.rsreu.bestProject.data.jpa.DeliveryRepository;
 import com.rsreu.bestProject.data.jpa.ProductRepository;
 import com.rsreu.bestProject.data.jpa.UserRepository;
@@ -8,14 +9,21 @@ import com.rsreu.bestProject.dto.delivery.DeliveryDTO;
 import com.rsreu.bestProject.dto.delivery.request.AddDeliveryDTORequest;
 import com.rsreu.bestProject.enums.AnalyzeMessageType;
 import com.rsreu.bestProject.util.AnalyzeUtil;
+import com.rsreu.bestProject.dto.delivery.request.UpdateDeliveryDTORequest;
+import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.util.DtoMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -30,11 +38,11 @@ public class DeliveryService {
     public DeliveryDTO add(AddDeliveryDTORequest deliveryDto){
         Delivery delivery = new Delivery()
                 .setDeliveryType(deliveryDto.getDeliveryType())
-                .setId(deliveryDto.getId())
                 .setAdressFrom(deliveryDto.getAdressFrom())
                 .setAdressTo(deliveryDto.getAdressTo())
                 .setDate(OffsetDateTime.of(LocalDateTime.ofEpochSecond(deliveryDto.getDate(), 0, ZoneOffset.UTC), ZoneOffset.UTC))
-                .setPeriod(deliveryDto.getPeriod());
+                .setPeriod(deliveryDto.getPeriod())
+                .setPaymentType(deliveryDto.getPaymentType());
 
         var product = productRepository.findById(deliveryDto.getProductId()).orElse(null);
         delivery.setProduct(product);
@@ -61,16 +69,40 @@ public class DeliveryService {
         return false;
     }
 
-    public DeliveryDTO update(AddDeliveryDTORequest deliveryDto){
+    public DeliveryDTO update(UpdateDeliveryDTORequest deliveryDto){
         var delivery = deliveryRepository.findById(deliveryDto.getId()).get();
         delivery.setDeliveryType(deliveryDto.getDeliveryType())
-                .setId(deliveryDto.getId())
                 .setAdressFrom(deliveryDto.getAdressFrom())
                 .setAdressTo(deliveryDto.getAdressTo())
                 .setDate(OffsetDateTime.of(LocalDateTime.ofEpochSecond(deliveryDto.getDate(), 0, ZoneOffset.UTC), ZoneOffset.UTC))
-                .setPeriod(deliveryDto.getPeriod());
+                .setPeriod(deliveryDto.getPeriod())
+                .setDeliveryType(deliveryDto.getDeliveryType());;
         deliveryRepository.save(delivery);
         analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapDeliveryToAnalyze(delivery), AnalyzeMessageType.UPDATE));
+
         return dtoMapper.mapDeliveryToDto(delivery);
+    }
+
+    public Map<Long, List<ProductDTO>> getDeliveries(Long userId){
+        var user = userRepository.findById(userId).orElse(null);
+        List<Delivery> listDeliveries = null;
+        Map<Long, List<ProductDTO>> deliveryCalender = new HashMap<>();
+        if(user != null){
+            listDeliveries = deliveryRepository.findAllByConsumer(user);
+        }
+
+        if(listDeliveries != null){
+            for (var el:listDeliveries) {
+                deliveryCalender.put(el.getDate().toEpochSecond(), new ArrayList<>());
+            }
+
+            for (var el:listDeliveries) {
+                deliveryCalender.get(el.getDate().toEpochSecond()).add(dtoMapper.mapProductToDTO(el.getProduct()));
+            }
+
+        }
+
+        return deliveryCalender;
+
     }
 }

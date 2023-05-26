@@ -1,11 +1,17 @@
 package com.rsreu.bestProject.controller;
 
+import com.rsreu.bestProject.data.entity.Product;
 import com.rsreu.bestProject.dto.delivery.DeliveryDTO;
 import com.rsreu.bestProject.dto.delivery.request.AddDeliveryDTORequest;
+import com.rsreu.bestProject.dto.delivery.request.UpdateDeliveryDTORequest;
+import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.service.DeliveryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/delivery")
@@ -31,8 +37,13 @@ public class DeliveryController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<DeliveryDTO> update(@RequestBody AddDeliveryDTORequest request) {
+    public ResponseEntity<DeliveryDTO> update(@RequestBody UpdateDeliveryDTORequest request) {
         return ResponseEntity.ok(deliveryService.update(request));
+    }
+
+    @GetMapping("/calender")
+    public ResponseEntity<Map<Long, List<ProductDTO>>> getDelivery(@RequestParam Long id){
+        return ResponseEntity.ok(deliveryService.getDeliveries(id));
     }
 
 }
