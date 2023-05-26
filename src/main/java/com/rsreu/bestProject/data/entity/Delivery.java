@@ -31,9 +31,6 @@ public class Delivery {
     @Column(name = "adress_to")
     private String adressTo;
 
-    @Column(name = "adress_from")
-    private String from;
-
     @Column(name = "period")
     private int period;
 
