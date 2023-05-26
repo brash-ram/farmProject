@@ -74,8 +74,8 @@ public class UserController {
     }
 
     @GetMapping("/self")
-    public ResponseEntity<UserInfoDTO> getCurrent(HttpServletRequest request){
-      return ResponseEntity.ok(dtoMapper.mapUserInfoToDto(AuthUtil.getUserFromContext(request)));
+    public ResponseEntity<UserInfoDTO> getCurrent(){
+      return ResponseEntity.ok(dtoMapper.mapUserInfoToDto(AuthUtil.getUserFromContext()));
     }
 
     @PutMapping("/change/password")

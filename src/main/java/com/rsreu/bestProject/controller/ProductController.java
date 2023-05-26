@@ -37,8 +37,8 @@ public class ProductController {
     }
 
     @PostMapping("/my")
-    public ResponseEntity<List<ProductDTO>> myProducts(HttpServletRequest request) {
-        UserInfo user = AuthUtil.getUserFromContext(request);
+    public ResponseEntity<List<ProductDTO>> myProducts() {
+        UserInfo user = AuthUtil.getUserFromContext();
         return ResponseEntity.ok(productService.my(user));
     }
 

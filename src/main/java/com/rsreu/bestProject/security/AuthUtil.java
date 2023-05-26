@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class AuthUtil {
 
-    public static UserInfo getUserFromContext(HttpServletRequest request) {
+    public static UserInfo getUserFromContext() {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (user != null) {
             return (UserInfo) user;
