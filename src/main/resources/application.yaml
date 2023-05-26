@@ -1,0 +1,68 @@
+spring:
+  mail:
+    host: mail.null.moe
+    port: 587
+    username: new-folder-2@null.moe
+    password: 6rcSH6K57EAtzsEY
+    test-connection: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    sender:
+      email: new-folder-2@null.moe
+      text: no-reply
+
+  jpa:
+    defer-datasource-initialization: false
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: false
+        jdbc:
+          batch_size: 50
+          fetch_size: 50
+        order_updates: true
+        order_insert: true
+    open-in-view: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: ${DB_URL}
+    username: username
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+  rabbitmq:
+    host: ${RABBIT_HOST}
+    username: user
+    password: qwerty
+    port: 5672
+
+  application:
+    name: farm-project
+
+  output:
+    ansi:
+      enabled: ALWAYS
+
+springdoc:
+  swagger-ui:
+    path: /swagger/swagger-ui.html
+
+server:
+  port: ${PORT}
+  address: 0.0.0.0
+
+app:
+  salt: GigaSalt
+  jwt:
+    secret: GigaSecret
+    expiration: 14400000
+    headerName: token
+
+
