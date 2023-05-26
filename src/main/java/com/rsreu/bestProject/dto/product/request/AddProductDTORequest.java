@@ -41,4 +41,10 @@ public class AddProductDTORequest {
     @Min(0)
     @NotNull
     private Long priceBoard;
+
+    @NotNull
+    private Long farmerId;
+
+    @NotNull
+    private Long dateRegistration;
 }

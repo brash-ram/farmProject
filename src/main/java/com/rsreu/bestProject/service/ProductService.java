@@ -3,6 +3,7 @@ package com.rsreu.bestProject.service;
 import com.rsreu.bestProject.data.entity.Product;
 import com.rsreu.bestProject.data.jpa.ProductCategoryRepository;
 import com.rsreu.bestProject.data.jpa.ProductRepository;
+import com.rsreu.bestProject.data.jpa.UserRepository;
 import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.dto.product.request.AddProductDTORequest;
 import com.rsreu.bestProject.enums.TagProduct;
@@ -27,22 +28,26 @@ public class ProductService {
 
     private final DtoMapper dtoMapper;
 
+    private final UserRepository userRepository;
+
     @Transactional
     public ProductDTO add(AddProductDTORequest dto, String pathToImage) {
         String filePath = "";
         if (dto.getImage() != null) {
             filePath = fileUtil.save(dto.getImage(), pathToImage);
         }
+        var user = userRepository.findById(dto.getFarmerId()).orElse(null);
         Product product = new Product()
                 .setImage(filePath)
-                .setCategory(categoryService.getByName(dto.getName()))
+                .setCategory(categoryService.getByName(dto.getCategory()))
                 .setName(dto.getName())
                 .setDescription(dto.getDescription())
                 .setPriceBoard(dto.getPriceBoard())
                 .setTags(dto.getTags().stream().map(TagProduct::getById).toList())
                 .setPrice(dto.getPrice())
                 .setTradePrice(dto.getTradePrice())
-                .setDateRegistration(OffsetDateTime.now());
+                .setDateRegistration(OffsetDateTime.now())
+                .setUserInfo(user);
         productRepository.save(product);
         return dtoMapper.mapProductToDTO(product);
     }

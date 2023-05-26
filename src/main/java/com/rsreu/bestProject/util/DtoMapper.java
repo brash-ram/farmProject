@@ -61,7 +61,8 @@ public class DtoMapper {
 
         dto.setCategory(product.getCategory().getName());
         dto.setTags(product.getTags().stream().map(TagProduct::getId).toList());
-        dto.setRating(RatingUtil.getAverage(product.getRating()));
+        if(product.getRating() != null)
+            dto.setRating(RatingUtil.getAverage(product.getRating()));
         dto.setIdUser(product.getUserInfo().getId());
         dto.setDateRegistration(product.getDateRegistration().toEpochSecond());
 
