@@ -2,21 +2,15 @@ package com.rsreu.bestProject.service;
 
 import com.rsreu.bestProject.data.entity.Product;
 import com.rsreu.bestProject.data.entity.UserInfo;
-import com.rsreu.bestProject.data.jpa.ProductCategoryRepository;
 import com.rsreu.bestProject.data.jpa.ProductRepository;
-import com.rsreu.bestProject.data.jpa.UserRepository;
 import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.dto.product.request.AddProductDTORequest;
 import com.rsreu.bestProject.enums.AnalyzeMessageType;
-import com.rsreu.bestProject.enums.TagProduct;
-import com.rsreu.bestProject.enums.Unit;
-import com.rsreu.bestProject.security.AuthUtil;
 import com.rsreu.bestProject.util.AnalyzeUtil;
 import com.rsreu.bestProject.util.DtoMapper;
 import com.rsreu.bestProject.util.FileUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;

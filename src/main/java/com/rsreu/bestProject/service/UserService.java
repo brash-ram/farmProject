@@ -206,4 +206,8 @@ public class UserService {
         }
         return false;
     }
+
+    public UserInfoDTO searchByEmail(String email) {
+        return dtoMapper.mapUserInfoToDto(userRepository.findByEmailContains(email).get());
+    }
 }

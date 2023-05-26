@@ -35,6 +35,12 @@ public class UserController {
 //        }
 //    }
 
+    @PostMapping("/search/email")
+    public ResponseEntity<UserInfoDTO> signUp(@RequestParam String email) {
+
+        return ResponseEntity.ok().body(userService.searchByEmail(email));
+    }
+
     @PostMapping("/signUp")
     public ResponseEntity<UserInfoDTO> signUp(@RequestBody SignUpDTORequest signUp) {
         UserInfoDTO response = userService.signUp(signUp);
