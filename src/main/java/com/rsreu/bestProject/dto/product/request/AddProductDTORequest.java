@@ -1,7 +1,5 @@
 package com.rsreu.bestProject.dto.product.request;
 
-import com.rsreu.bestProject.data.entity.ProductCategory;
-import com.rsreu.bestProject.enums.TagProduct;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -15,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddProductDTORequest {
-    @NotNull
     private MultipartFile image;
 
     @NotNull

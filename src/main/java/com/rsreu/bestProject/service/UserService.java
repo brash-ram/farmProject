@@ -124,7 +124,8 @@ public class UserService {
                     .setCode(code);
         }
 
-        emailService.sendSimpleEmail(email, code);
+        //emailService.sendSimpleEmail(email, code);
+        System.out.println(code);
         simpleUserInfoRepository.save(simpleUserInfo);
     }
 
@@ -139,16 +140,17 @@ public class UserService {
 
     @Transactional
     public Boolean signIn(String email, String password) {
-        Optional<UserInfo> userInfo = userRepository.findByEmailAndPassword(email, passwordEncoder.encode(password));
-
+        Optional<UserInfo> userInfo = userRepository.findByEmail(email);
 
         if (userInfo.isPresent()) {
             var user = userInfo.get();
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            return true;
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                Authentication authentication = authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(user.getEmail(), password)
+                );
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                return true;
+            }
         }
         return false;
     }

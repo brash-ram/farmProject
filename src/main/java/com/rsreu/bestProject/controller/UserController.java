@@ -2,7 +2,6 @@ package com.rsreu.bestProject.controller;
 
 import com.rsreu.bestProject.dto.user.UserInfoDTO;
 import com.rsreu.bestProject.dto.user.request.*;
-import com.rsreu.bestProject.dto.user.response.SimpleUserSignUpDTOResponse;
 import com.rsreu.bestProject.dto.user.response.UserInfoListDTOResponse;
 import com.rsreu.bestProject.dto.user.response.UserNameDTOResponse;
 import com.rsreu.bestProject.service.UserService;
@@ -20,24 +19,24 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signUp/sendEmail")
-    public ResponseEntity<SimpleUserSignUpDTOResponse> simpleSignUp(@RequestBody SimpleSignUpDTORequest simpleSignUpDTORequest) {
-        userService.simpleSignUp(simpleSignUpDTORequest.getEmail());
+    public ResponseEntity<Boolean> simpleSignUp(@RequestBody SendEmailDTORequest sendEmailDTORequest) {
+        userService.simpleSignUp(sendEmailDTORequest.getEmail());
         return ResponseEntity
                 .ok()
-                .body(new SimpleUserSignUpDTOResponse(simpleSignUpDTORequest.getEmail()));
+                .body(true);
     }
 
-    @PostMapping("/signUp/confirmEmail")
-    public ResponseEntity<Void> confirmEmail(@RequestBody ConfirmEmailDTORequest request) {
-        boolean confirm = userService.confirmEmail(request.getEmail(), request.getCode());
-        if (confirm) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
-    }
+//    @PostMapping("/signUp/confirmEmail")
+//    public ResponseEntity<Void> confirmEmail(@RequestBody ConfirmEmailDTORequest request) {
+//        boolean confirm = userService.confirmEmail(request.getEmail(), request.getCode());
+//        if (confirm) {
+//            return ResponseEntity.ok().build();
+//        } else {
+//            return ResponseEntity.badRequest().build();
+//        }
+//    }
 
-    @PostMapping("/signUp/full")
+    @PostMapping("/signUp")
     public ResponseEntity<UserInfoDTO> signUp(@RequestBody SignUpDTORequest signUp) {
         UserInfoDTO response = userService.signUp(signUp);
         HttpHeaders httpHeaders = userService.getAuthorizeHeader(signUp.getEmail());

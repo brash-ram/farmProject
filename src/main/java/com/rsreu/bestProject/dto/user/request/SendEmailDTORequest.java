@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SimpleSignUpDTORequest {
+public class SendEmailDTORequest {
     @Email
     private String email;
 }

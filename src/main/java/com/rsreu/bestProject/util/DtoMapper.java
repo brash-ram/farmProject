@@ -12,15 +12,25 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
-@RequiredArgsConstructor
 public class DtoMapper {
 
     private final ModelMapper modelMapper;
 
+    public DtoMapper(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+        modelMapper.typeMap(UserInfo.class, UserInfoDTO.class).addMappings(mp -> {
+            mp.skip(UserInfoDTO::setRoles);
+            mp.skip(UserInfoDTO::setDateRegistration);
+        });
+    }
+
     public UserInfoDTO mapUserInfoToDto(UserInfo userInfo) {
         UserInfoDTO userInfoDTO = modelMapper.map(userInfo, UserInfoDTO.class);
         userInfoDTO.setRoles(userInfo.getRoles().stream().map(role -> role.getName().getId()).toList());
+        userInfoDTO.setDateRegistration(userInfo.getDateRegistration().toEpochSecond());
         return userInfoDTO;
     }
 
@@ -37,6 +47,10 @@ public class DtoMapper {
         dto.setRating(RatingUtil.getAverage(product.getRating()));
 
         return dto;
+    }
+
+    public List<ProductDTO> mapProductsToDTO(List<Product> products) {
+        return products.stream().map(this::mapProductToDTO).toList();
     }
 
 }

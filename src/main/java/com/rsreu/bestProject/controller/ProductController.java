@@ -7,10 +7,9 @@ import com.rsreu.bestProject.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/api/product")
 @RestController
@@ -27,5 +26,24 @@ public class ProductController {
         productService.add(addProductDTORequest,  request.getSession().getServletContext().getRealPath("/images/"));
 
         return null;
+    }
+
+//    @PostMapping("/delete")
+//    public ResponseEntity<TemplateDTOResponse> delete(@RequestParam Long id) {
+//        if(productService.delete(id))
+//            return ResponseEntity.ok().build();
+//        else
+//            return ResponseEntity.badRequest().build();
+//
+//    }
+
+    @PutMapping("/update")
+    public ResponseEntity<ProductDTO> update(@RequestBody AddProductDTORequest request) {
+        return ResponseEntity.ok(productService.update(request));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ProductDTO>> all() {
+        return ResponseEntity.ok(productService.all());
     }
 }

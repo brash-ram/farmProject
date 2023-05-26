@@ -30,5 +30,5 @@ public class UserInfoDTO {
     private List<Integer> roles;
 
     @NotNull
-    private OffsetDateTime dateRegistration;
+    private Long dateRegistration;
 }

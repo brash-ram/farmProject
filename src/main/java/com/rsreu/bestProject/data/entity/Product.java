@@ -59,4 +59,7 @@ public class Product {
     @Min(0)
     private Long priceBoard;
 
+    @ManyToOne()
+    private UserInfo userInfo;
+
 }

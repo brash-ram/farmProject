@@ -12,6 +12,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -26,7 +28,10 @@ public class ProductService {
 
     @Transactional
     public ProductDTO add(AddProductDTORequest dto, String pathToImage) {
-        String filePath = fileUtil.save(dto.getImage(), pathToImage);
+        String filePath = "";
+        if (dto.getImage() != null) {
+            filePath = fileUtil.save(dto.getImage(), pathToImage);
+        }
         Product product = new Product()
                 .setImage(filePath)
                 .setCategory(categoryService.getByName(dto.getName()))
@@ -41,4 +46,11 @@ public class ProductService {
     }
 
 
+    public List<ProductDTO> all() {
+        return dtoMapper.mapProductsToDTO(productRepository.findAll());
+    }
+
+    public ProductDTO update(AddProductDTORequest request) {
+        return null;
+    }
 }
