@@ -1,11 +1,9 @@
 package com.rsreu.bestProject.dto.delivery;
 
+import com.rsreu.bestProject.data.entity.Product;
+import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.enums.DeliveryType;
 import com.rsreu.bestProject.enums.PaymentType;
-import com.rsreu.bestProject.enums.Unit;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,7 +32,7 @@ public class DeliveryDTO {
     private Long period;
 
     @NotNull
-    private Long productId;
+    private ProductDTO product;
 
     @NotNull
     private Long consumerId;

@@ -6,6 +6,7 @@ import com.rsreu.bestProject.dto.delivery.request.AddDeliveryDTORequest;
 import com.rsreu.bestProject.dto.delivery.request.UpdateDeliveryDTORequest;
 import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.service.DeliveryService;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,4 +52,8 @@ public class DeliveryController {
         return ResponseEntity.ok(deliveryService.getDeliveryDtoById(id));
     }
 
+    @GetMapping("/search/position")
+    public ResponseEntity<List<DeliveryDTO>> searchByPosition(@RequestParam @NotNull String position) {
+        return ResponseEntity.ok(deliveryService.search(position));
+    }
 }
