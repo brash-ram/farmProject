@@ -32,8 +32,6 @@ public class ProductService {
 
     private final DtoMapper dtoMapper;
 
-    private final UserService userService;
-
     private final Analyser analyser;
 
     @Transactional
