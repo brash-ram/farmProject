@@ -18,7 +18,7 @@ spring:
       text: no-reply
 
   jpa:
-    defer-datasource-initialization: false
+    defer-datasource-initialization: true
     properties:
       hibernate:
         format_sql: true
@@ -32,6 +32,12 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+  sql:
+    init:
+      platform: postgresql
+      mode: embedded
+      encoding: utf-8
 
   datasource:
     url: ${DB_URL}
@@ -50,7 +56,7 @@ spring:
 
   output:
     ansi:
-      enabled: ALWAYS
+      enabled: always
 
 springdoc:
   swagger-ui:

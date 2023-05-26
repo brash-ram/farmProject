@@ -5,6 +5,10 @@ import java.util.List;
 public class RatingUtil {
 
     public static Double getAverage(List<Integer> rating) {
+        if (rating == null || rating.size() != 0) {
+            return 0d;
+        }
+
         Double sum = 0D;
         for (Integer value : rating) {
             sum += value;
