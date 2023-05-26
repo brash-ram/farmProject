@@ -1,12 +1,14 @@
 package com.rsreu.bestProject.controller;
 
+import com.rsreu.bestProject.dto.mark.AddMarkDTORequest;
+import com.rsreu.bestProject.dto.mark.ChangeMarkDTO;
+import com.rsreu.bestProject.dto.mark.DeleteMarkDTORequest;
 import com.rsreu.bestProject.dto.user.UserInfoDTO;
 import com.rsreu.bestProject.dto.user.request.*;
 import com.rsreu.bestProject.dto.user.response.UserInfoListDTOResponse;
 import com.rsreu.bestProject.security.AuthUtil;
 import com.rsreu.bestProject.service.UserService;
 import com.rsreu.bestProject.util.DtoMapper;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -86,6 +88,24 @@ public class UserController {
     @PostMapping("/change/role")
     public ResponseEntity<UserInfoDTO> updateRole(@RequestBody ChangeRoleDTORequest changeRoleDTORequest) {
         return ResponseEntity.ok(userService.updateRoles(changeRoleDTORequest));
+    }
+
+    @PostMapping("/change/marks/add")
+    public ResponseEntity<Void> addRating(@RequestBody AddMarkDTORequest dto) {
+        userService.addMark(dto.getMark(), dto.getTargetId());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/change/marks/change")
+    public ResponseEntity<Void> updateRating(@RequestBody ChangeMarkDTO dto) {
+        userService.changeMark(dto.getNewMark(), dto.getOldMark(), dto.getTargetId());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/change/marks/delete")
+    public ResponseEntity<Void> deleteMark(@RequestBody DeleteMarkDTORequest dto) {
+        userService.deleteMark(dto.getMark(), dto.getTargetId());
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/byId")
