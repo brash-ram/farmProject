@@ -56,7 +56,8 @@ public class ProductService {
                 .setTradePrice(dto.getTradePrice())
                 .setDateRegistration(OffsetDateTime.now())
                 .setUserInfo(user)
-                        .setUnit(Unit.getById(dto.getUnit()));
+                        .setUnit(Unit.getById(dto.getUnit()))
+                .setPosition(dto.getPosition());
         productRepository.save(product);
 
         analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapProductToAnalyze(product), AnalyzeMessageType.ADD));
@@ -81,7 +82,8 @@ public class ProductService {
                 .setPriceBoard(dto.getPriceBoard())
                 .setTags(dto.getTags().stream().map(TagProduct::getById).toList())
                 .setPrice(dto.getPrice())
-                .setTradePrice(dto.getTradePrice());
+                .setTradePrice(dto.getTradePrice())
+                        .setPosition(dto.getPosition());
         productRepository.save(product);
 
         analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapProductToAnalyze(product), AnalyzeMessageType.UPDATE));
