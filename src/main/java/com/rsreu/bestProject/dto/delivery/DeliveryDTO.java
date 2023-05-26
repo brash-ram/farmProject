@@ -45,5 +45,6 @@ public class DeliveryDTO {
     @NotNull
     private PaymentType paymentType;
 
-
+    @NotNull
+    private Long count;
 }

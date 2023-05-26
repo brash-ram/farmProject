@@ -1,29 +1,41 @@
 package com.rsreu.bestProject.controller;
 
-import com.rsreu.bestProject.data.entity.Cart;
-import com.rsreu.bestProject.dto.product.ProductDTO;
-import jakarta.servlet.http.HttpServletRequest;
+import com.rsreu.bestProject.dto.cart.CartDTOResponse;
+import com.rsreu.bestProject.dto.template.TemplateDTO;
+import com.rsreu.bestProject.dto.template.request.TemplateDTORequest;
+import com.rsreu.bestProject.dto.template.response.TemplateDTOResponse;
+import com.rsreu.bestProject.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/cart")
+@RequestMapping("/api/template")
 @RequiredArgsConstructor
 public class CartController {
 
-    @GetMapping("/my")
-    public ResponseEntity<List<ProductDTO>> getMyCart(
-            HttpServletRequest request
-    ) {
-        return null;
+    private final CartService cartService;
+
+    @PostMapping("/add")
+    public ResponseEntity<CartDTOResponse> add(@RequestBody Long userId) {
+        //cartService.add(template);
+        return ResponseEntity
+                .ok()
+                .body(new CartDTOResponse());
     }
 
-//    @PostMapping("/add")
-//    public ResponseEntity<>
+    @PostMapping("/delete")
+    public ResponseEntity<TemplateDTOResponse> delete(@RequestParam Long id) {
+        if(cartService.delete(id))
+            return ResponseEntity.ok().build();
+        else
+            return ResponseEntity.badRequest().build();
+
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<TemplateDTO> update(@RequestBody TemplateDTORequest request) {
+        return ResponseEntity.ok(cartService.update(request));
+    }
+
 }
