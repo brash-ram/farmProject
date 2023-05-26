@@ -1,5 +1,6 @@
 package com.rsreu.bestProject.data.entity;
 
+import com.rsreu.bestProject.enums.DeliveryType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +21,7 @@ public class Delivery {
     private Long id;
 
     @Column(name = "delivery_type")
-    private String name;
+    private DeliveryType deliveryType;
 
     @Column(name = "delivery_date_start")
     private OffsetDateTime date;
@@ -32,10 +33,19 @@ public class Delivery {
     private String adressTo;
 
     @Column(name = "period")
-    private int period;
+    private Long period;
 
-    @Column(name ="product")
-    private int product;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "consumer_id")
+    private UserInfo consumer;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "farmer_id")
+    private  UserInfo farmer;
 
 
 
