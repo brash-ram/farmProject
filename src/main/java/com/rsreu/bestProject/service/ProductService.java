@@ -52,8 +52,22 @@ public class ProductService {
         return dtoMapper.mapProductsToDTO(productRepository.findAll());
     }
 
-    public ProductDTO update(AddProductDTORequest request, String imaegs) {
-        return add(request, imaegs);
+    public ProductDTO update(AddProductDTORequest dto, String imaegs) {
+        String filePath = "";
+        if (dto.getImage() != null) {
+            filePath = fileUtil.save(dto.getImage(), imaegs);
+        }
+        Product product = new Product()
+                .setImage(filePath)
+                .setCategory(categoryService.getByName(dto.getName()))
+                .setName(dto.getName())
+                .setDescription(dto.getDescription())
+                .setPriceBoard(dto.getPriceBoard())
+                .setTags(dto.getTags().stream().map(TagProduct::getById).toList())
+                .setPrice(dto.getPrice())
+                .setTradePrice(dto.getTradePrice());
+        productRepository.save(product);
+        return dtoMapper.mapProductToDTO(product);
     }
 
     @Transactional

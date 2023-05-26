@@ -18,6 +18,7 @@ public class AppStartupRunner implements CommandLineRunner {
         if (roleRepository.findAll().size() == 0) {
             roleRepository.save(new Role().setName(RoleEnum.ADMIN));
             roleRepository.save(new Role().setName(RoleEnum.USER));
+            roleRepository.save(new Role().setName(RoleEnum.FARMER));
         }
 
     }

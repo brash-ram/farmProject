@@ -1,4 +1,6 @@
 spring:
+  mvc:
+    dispatch-options-request: true
   mail:
     host: mail.null.moe
     port: 587
@@ -53,6 +55,10 @@ spring:
 springdoc:
   swagger-ui:
     path: /swagger/swagger-ui.html
+
+rabbit:
+  queue: queue
+  exchange: exchange
 
 server:
   port: ${PORT}

@@ -68,7 +68,7 @@ public class UserController {
       return ResponseEntity.ofNullable(userService.getUserInfo(request.getUserPrincipal().getName()));
     }
 
-    @PostMapping("/change/password")
+    @PutMapping("/change/password")
     public ResponseEntity<UserInfoDTO> changePassword(@RequestBody ChangePasswordDTORequest dto) {
         return ResponseEntity.ok(userService.updatePassword(dto));
     }
