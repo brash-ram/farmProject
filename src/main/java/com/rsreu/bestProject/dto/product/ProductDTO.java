@@ -55,4 +55,7 @@ public class ProductDTO {
 
     @NotNull
     private Long dateRegistration;
+
+    @NotNull
+    private Integer unit;
 }

@@ -1,18 +1,9 @@
 package com.rsreu.bestProject.dto.delivery;
 
-import com.rsreu.bestProject.data.entity.Product;
-import com.rsreu.bestProject.data.entity.UserInfo;
-import com.rsreu.bestProject.enums.DeliveryType;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.OffsetDateTime;
 
 @Data
 @AllArgsConstructor
@@ -22,7 +13,7 @@ public class DeliveryDTO {
     private Long id;
 
     @NotNull
-    private DeliveryType deliveryType;
+    private Integer deliveryType;
 
     @NotNull
     private Long date;
@@ -37,13 +28,13 @@ public class DeliveryDTO {
     private Long period;
 
     @NotNull
-    private Product product;
+    private Long productId;
 
     @NotNull
-    private UserInfo consumer;
+    private Long consumerId;
 
     @NotNull
-    private  UserInfo farmer;
+    private  Long farmerId;
 
 
 

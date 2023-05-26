@@ -1,8 +1,10 @@
 package com.rsreu.bestProject.controller;
 
 
+import com.rsreu.bestProject.data.entity.UserInfo;
 import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.dto.product.request.AddProductDTORequest;
+import com.rsreu.bestProject.security.AuthUtil;
 import com.rsreu.bestProject.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +25,19 @@ public class ProductController {
             @RequestBody AddProductDTORequest addProductDTORequest,
             HttpServletRequest request
     ) {
-        productService.add(addProductDTORequest,  request.getSession().getServletContext().getRealPath("/images/"));
+        productService.add(
+                addProductDTORequest,
+                request.getSession().getServletContext().getRealPath("/images/"),
+                AuthUtil.getUserFromRequest(request)
+        );
 
         return null;
+    }
+
+    @PostMapping("/my")
+    public ResponseEntity<List<ProductDTO>> myProducts(HttpServletRequest request) {
+        UserInfo user = AuthUtil.getUserFromRequest(request);
+        return ResponseEntity.ok(productService.my(user));
     }
 
     @PostMapping("/delete")
@@ -34,7 +46,7 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/update")
+    @PostMapping("/update")
     public ResponseEntity<ProductDTO> update(
             @RequestBody AddProductDTORequest dto,
             HttpServletRequest request

@@ -5,6 +5,7 @@ import com.rsreu.bestProject.data.entity.Delivery;
 import com.rsreu.bestProject.data.entity.Product;
 import com.rsreu.bestProject.data.entity.TemplateEntity;
 import com.rsreu.bestProject.data.entity.UserInfo;
+import com.rsreu.bestProject.dto.analyse.ProductAnalyzeDTO;
 import com.rsreu.bestProject.dto.delivery.DeliveryDTO;
 import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.dto.template.TemplateDTO;
@@ -33,6 +34,14 @@ public class DtoMapper {
             mp.skip(ProductDTO::setRating);
             mp.skip(ProductDTO::setIdUser);
             mp.skip(ProductDTO::setDateRegistration);
+            mp.skip(ProductDTO::setUnit);
+        });
+
+        modelMapper.typeMap(Delivery.class, DeliveryDTO.class).addMappings(mp -> {
+            mp.skip(DeliveryDTO::setDeliveryType);
+            mp.skip(DeliveryDTO::setConsumerId);
+            mp.skip(DeliveryDTO::setFarmerId);
+            mp.skip(DeliveryDTO::setDate);
         });
     }
 
@@ -49,9 +58,9 @@ public class DtoMapper {
 
     public DeliveryDTO mapDeliveryToDto(Delivery delivery){
         DeliveryDTO dto = modelMapper.map(delivery, DeliveryDTO.class);
-        dto.setConsumer(delivery.getConsumer());
-        dto.setFarmer(delivery.getFarmer());
-        dto.setDeliveryType(delivery.getDeliveryType());
+        dto.setConsumerId(delivery.getConsumer().getId());
+        dto.setFarmerId(delivery.getFarmer().getId());
+        dto.setDeliveryType(delivery.getDeliveryType().getId());
         dto.setDate(delivery.getDate().toEpochSecond());
         return dto;
     }
@@ -65,13 +74,17 @@ public class DtoMapper {
             dto.setRating(RatingUtil.getAverage(product.getRating()));
         dto.setIdUser(product.getUserInfo().getId());
         dto.setDateRegistration(product.getDateRegistration().toEpochSecond());
-
+        dto.setUnit(product.getUnit().getId());
 
         return dto;
     }
 
     public List<ProductDTO> mapProductsToDTO(List<Product> products) {
         return products.stream().map(this::mapProductToDTO).toList();
+    }
+
+    public ProductAnalyzeDTO mapProductToAnalyze(Product product) {
+        return modelMapper.map(product, ProductAnalyzeDTO.class);
     }
 
 }

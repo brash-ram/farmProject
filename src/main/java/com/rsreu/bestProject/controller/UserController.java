@@ -42,7 +42,7 @@ public class UserController {
         return ResponseEntity.ok().headers(httpHeaders).body(response);
     }
 
-    @PutMapping("/change/update")
+    @PostMapping("/change/update")
     public ResponseEntity<UserInfoDTO> updateUser(@RequestBody UpdateUserDTORequest info) {
         return ResponseEntity.ok(userService.updateUser(info));
     }
@@ -73,7 +73,7 @@ public class UserController {
         return ResponseEntity.ok(userService.updatePassword(dto));
     }
 
-    @PutMapping("/change/role")
+    @PostMapping("/change/role")
     public ResponseEntity<UserInfoDTO> updateRole(@RequestBody ChangeRoleDTORequest changeRoleDTORequest) {
         return ResponseEntity.ok(userService.updateRoles(changeRoleDTORequest));
     }

@@ -1,6 +1,7 @@
 package com.rsreu.bestProject.data.entity;
 
 import com.rsreu.bestProject.enums.TagProduct;
+import com.rsreu.bestProject.enums.Unit;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
@@ -62,6 +63,10 @@ public class Product {
 
     @ManyToOne()
     private UserInfo userInfo;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "unit", length = 30)
+    private Unit unit;
 
     @Column(name = "date_registration")
     private OffsetDateTime dateRegistration;

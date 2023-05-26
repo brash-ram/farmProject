@@ -1,12 +1,16 @@
 package com.rsreu.bestProject.service;
 
 import com.rsreu.bestProject.data.entity.Product;
+import com.rsreu.bestProject.data.entity.UserInfo;
 import com.rsreu.bestProject.data.jpa.ProductCategoryRepository;
 import com.rsreu.bestProject.data.jpa.ProductRepository;
 import com.rsreu.bestProject.data.jpa.UserRepository;
 import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.dto.product.request.AddProductDTORequest;
+import com.rsreu.bestProject.enums.AnalyzeMessageType;
 import com.rsreu.bestProject.enums.TagProduct;
+import com.rsreu.bestProject.security.AuthUtil;
+import com.rsreu.bestProject.util.AnalyzeUtil;
 import com.rsreu.bestProject.util.DtoMapper;
 import com.rsreu.bestProject.util.FileUtil;
 import jakarta.transaction.Transactional;
@@ -28,15 +32,16 @@ public class ProductService {
 
     private final DtoMapper dtoMapper;
 
-    private final UserRepository userRepository;
+    private final UserService userService;
+
+    private final Analyser analyser;
 
     @Transactional
-    public ProductDTO add(AddProductDTORequest dto, String pathToImage) {
+    public ProductDTO add(AddProductDTORequest dto, String pathToImage, UserInfo user) {
         String filePath = "";
         if (dto.getImage() != null) {
             filePath = fileUtil.save(dto.getImage(), pathToImage);
         }
-        var user = userRepository.findById(dto.getFarmerId()).orElse(null);
         Product product = new Product()
                 .setImage(filePath)
                 .setCategory(categoryService.getByName(dto.getCategory()))
@@ -49,6 +54,8 @@ public class ProductService {
                 .setDateRegistration(OffsetDateTime.now())
                 .setUserInfo(user);
         productRepository.save(product);
+
+        analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapProductToAnalyze(product), AnalyzeMessageType.ADD));
         return dtoMapper.mapProductToDTO(product);
     }
 
@@ -72,6 +79,8 @@ public class ProductService {
                 .setPrice(dto.getPrice())
                 .setTradePrice(dto.getTradePrice());
         productRepository.save(product);
+
+        analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapProductToAnalyze(product), AnalyzeMessageType.UPDATE));
         return dtoMapper.mapProductToDTO(product);
     }
 
@@ -79,9 +88,15 @@ public class ProductService {
     public void delete(Long id) {
         Product product = getById(id);
         productRepository.delete(product);
+        analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapProductToAnalyze(product), AnalyzeMessageType.REMOVE));
     }
 
     public Product getById(Long id) {
         return productRepository.findById(id).get();
+    }
+
+    @Transactional
+    public List<ProductDTO> my(UserInfo user) {
+        return dtoMapper.mapProductsToDTO(productRepository.findAllByUserInfo(user));
     }
 }
