@@ -45,7 +45,7 @@ public class Product {
     private String position;
 
     @Column(name = "rating")
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "product_rating", joinColumns = @JoinColumn(name = "product_id"))
     private List<Integer> rating = new ArrayList<>();
 

@@ -57,7 +57,7 @@ public class UserInfo implements UserDetails {
     private OffsetDateTime dateRegistration;
 
     @Column(name = "rating")
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_rating", joinColumns = @JoinColumn(name = "user_id"))
     private List<Integer> rating;
 
