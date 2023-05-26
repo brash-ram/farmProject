@@ -25,6 +25,7 @@ public class DtoMapper {
         modelMapper.typeMap(UserInfo.class, UserInfoDTO.class).addMappings(mp -> {
             mp.skip(UserInfoDTO::setRoles);
             mp.skip(UserInfoDTO::setDateRegistration);
+            mp.skip(UserInfoDTO::setRating);
         });
 
         modelMapper.typeMap(Product.class, ProductDTO.class).addMappings(mp -> {
@@ -60,6 +61,7 @@ public class DtoMapper {
         UserInfoDTO userInfoDTO = modelMapper.map(userInfo, UserInfoDTO.class);
         userInfoDTO.setRoles(userInfo.getRoles().stream().map(Role::getName).toList());
         userInfoDTO.setDateRegistration(userInfo.getDateRegistration().toEpochSecond());
+        userInfoDTO.setRating(RatingUtil.getAverage(userInfo.getRating()));
         return userInfoDTO;
     }
 
