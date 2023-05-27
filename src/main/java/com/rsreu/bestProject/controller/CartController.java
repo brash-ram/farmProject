@@ -33,6 +33,11 @@ public class CartController {
 
     }
 
+    @GetMapping("/productExist")
+    public ResponseEntity<Boolean> existProduct(@RequestParam Long userId, @RequestParam Long productId) {
+        return ResponseEntity.ok(cartService.productExist(userId, productId));
+    }
+
 //    @PostMapping("/update")
 //    public ResponseEntity<TemplateDTO> update(@RequestBody TemplateDTORequest request) {
 //        return ResponseEntity.ok(cartService.update(request));

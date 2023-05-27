@@ -1,6 +1,7 @@
 package com.rsreu.bestProject.service;
 
 import com.rsreu.bestProject.data.entity.Cart;
+import com.rsreu.bestProject.data.entity.Product;
 import com.rsreu.bestProject.data.entity.TemplateEntity;
 import com.rsreu.bestProject.data.entity.UserInfo;
 import com.rsreu.bestProject.data.jpa.CartRepository;
@@ -13,6 +14,7 @@ import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.dto.template.TemplateDTO;
 import com.rsreu.bestProject.dto.template.request.TemplateDTORequest;
 import com.rsreu.bestProject.util.DtoMapper;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,11 @@ public class CartService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
+    private final UserService userService;
+
     private final DtoMapper dtoMapper;
+
+    private final ProductService productService;
 
     public CartDTO add(Long userId, Long productId){
         var userCart = getCartByUser(userId);
@@ -62,5 +68,11 @@ public class CartService {
 
     public List<ProductDTO> getProducts(UserInfo user) {
         return dtoMapper.mapProductsToDTO(cartRepository.findByOwner(user).get().getProducts());
+    }
+
+    @Transactional
+    public Boolean productExist(Long userId, Long productId) {
+        UserInfo user = userService.getById(userId);
+        return cartRepository.existsByOwner(user);
     }
 }

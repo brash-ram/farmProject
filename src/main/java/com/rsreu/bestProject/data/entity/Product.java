@@ -4,6 +4,7 @@ import com.rsreu.bestProject.enums.DeliveryType;
 import com.rsreu.bestProject.enums.TagProduct;
 import com.rsreu.bestProject.enums.Unit;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -82,5 +83,10 @@ public class Product {
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
     private List<DeliveryType> deliveryTypes;
+
+    @Column(name = "discount")
+    @Min(0)
+    @Max(100)
+    private Integer discount;
 
 }
