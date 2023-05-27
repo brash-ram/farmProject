@@ -24,7 +24,7 @@ public class CartController {
                 .body(cartService.add(userId, productId));
     }
 
-    @DeleteMapping("/deleteProduct")
+    @PostMapping("/deleteProduct")
     public ResponseEntity<Void> delete(@RequestParam Long userId, @RequestParam Long productId) {
         if(cartService.delete(userId, productId))
             return ResponseEntity.ok().build();

@@ -5,6 +5,7 @@ import com.rsreu.bestProject.dto.delivery.request.AddDeliveryDTORequest;
 import com.rsreu.bestProject.dto.delivery.request.UpdateDeliveryDTORequest;
 import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.service.DeliveryService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class DeliveryController {
     private final DeliveryService deliveryService;
 
     @PostMapping("/add")
-    public ResponseEntity<DeliveryDTO> add(@RequestBody AddDeliveryDTORequest deliveryDTORequest) {
+    public ResponseEntity<DeliveryDTO> add(@RequestBody @Valid AddDeliveryDTORequest deliveryDTORequest) {
         var dto = deliveryService.add(deliveryDTORequest);
         return ResponseEntity
                 .ok()
@@ -42,7 +43,7 @@ public class DeliveryController {
     }
 
     @PostMapping("/addAll")
-    public ResponseEntity<List<DeliveryDTO>> addAll(@RequestBody List<AddDeliveryDTORequest> request) {
+    public ResponseEntity<List<DeliveryDTO>> addAll(@RequestBody @Valid List<AddDeliveryDTORequest> request) {
         return ResponseEntity.ok(deliveryService.addAll(request));
     }
 

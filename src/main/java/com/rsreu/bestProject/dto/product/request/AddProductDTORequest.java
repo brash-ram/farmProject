@@ -3,6 +3,7 @@ package com.rsreu.bestProject.dto.product.request;
 import com.rsreu.bestProject.enums.DeliveryType;
 import com.rsreu.bestProject.enums.TagProduct;
 import com.rsreu.bestProject.enums.Unit;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -59,5 +60,10 @@ public class AddProductDTORequest {
 
     @NotNull
     private List<DeliveryType> deliveryTypes;
+
+    @NotNull
+    @Max(100)
+    @Min(0)
+    private Integer discount;
 
 }

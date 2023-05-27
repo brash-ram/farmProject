@@ -6,6 +6,7 @@ import com.rsreu.bestProject.data.entity.UserInfo;
 import com.rsreu.bestProject.data.jpa.ProductCategoryRepository;
 import com.rsreu.bestProject.data.jpa.ProductRepository;
 import com.rsreu.bestProject.dto.product.ProductDTO;
+import com.rsreu.bestProject.dto.product.request.AddDiscountDTORequest;
 import com.rsreu.bestProject.dto.product.request.AddProductDTORequest;
 import com.rsreu.bestProject.dto.product.request.UpdateProductDTORequest;
 import com.rsreu.bestProject.enums.AnalyzeMessageType;
@@ -60,7 +61,8 @@ public class ProductService {
                 .setPosition(dto.getPosition())
                 .setStartSales(DateUtils.parse(dto.getStartSales()))
                 .setEndSales(DateUtils.parse(dto.getEndSales()))
-                .setDeliveryTypes(dto.getDeliveryTypes());
+                .setDeliveryTypes(dto.getDeliveryTypes())
+                .setDiscount(dto.getDiscount());
         productRepository.save(product);
 
         analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapProductToAnalyze(product), AnalyzeMessageType.ADD));
@@ -91,7 +93,8 @@ public class ProductService {
                 .setPosition(dto.getPosition())
                 .setStartSales(DateUtils.parse(dto.getStartSales()))
                 .setEndSales(DateUtils.parse(dto.getEndSales()))
-                .setDeliveryTypes(dto.getDeliveryTypes());
+                .setDeliveryTypes(dto.getDeliveryTypes())
+                .setDiscount(dto.getDiscount());
         productRepository.save(product);
 
         analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapProductToAnalyze(product), AnalyzeMessageType.UPDATE));
@@ -134,5 +137,12 @@ public class ProductService {
 
     public List<ProductDTO> searchByPosition(String location) {
         return productRepository.findAllByPositionContainingIgnoreCase(location).stream().map(dtoMapper::mapProductToDTO).toList();
+    }
+
+    @Transactional
+    public ProductDTO addDiscount(AddDiscountDTORequest dto) {
+        Product product = productRepository.findById(dto.getProductId()).get();
+        product.setDiscount(dto.getDiscount());
+        return dtoMapper.mapProductToDTO(product);
     }
 }

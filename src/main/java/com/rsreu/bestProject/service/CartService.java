@@ -28,11 +28,7 @@ public class CartService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
-    private final UserService userService;
-
     private final DtoMapper dtoMapper;
-
-    private final ProductService productService;
 
     public CartDTO add(Long userId, Long productId){
         var userCart = getCartByUser(userId);
@@ -59,6 +55,12 @@ public class CartService {
 
     }
 
+    public Cart cretaeCart(UserInfo user) {
+        Cart cart = new Cart().setOwner(user);
+        cartRepository.save(cart);
+        return cart;
+    }
+
     public TemplateDTO update(TemplateDTORequest template){
         //var entity = templateRepository.findById(0L).orElse(null);
         //entity.set..
@@ -72,7 +74,8 @@ public class CartService {
 
     @Transactional
     public Boolean productExist(Long userId, Long productId) {
-        UserInfo user = userService.getById(userId);
-        return cartRepository.existsByOwner(user);
+        UserInfo user = userRepository.findById(userId).get();
+        Product product = productRepository.findById(productId).get();
+        return cartRepository.existsByOwnerAndProductsContains(user, product);
     }
 }

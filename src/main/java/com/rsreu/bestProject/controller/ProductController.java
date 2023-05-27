@@ -3,6 +3,7 @@ package com.rsreu.bestProject.controller;
 
 import com.rsreu.bestProject.data.entity.UserInfo;
 import com.rsreu.bestProject.dto.product.ProductDTO;
+import com.rsreu.bestProject.dto.product.request.AddDiscountDTORequest;
 import com.rsreu.bestProject.dto.product.request.AddProductDTORequest;
 import com.rsreu.bestProject.dto.product.request.UpdateProductDTORequest;
 import com.rsreu.bestProject.security.AuthUtil;
@@ -84,5 +85,10 @@ public class ProductController {
     @GetMapping("/search/location")
     public ResponseEntity<List<ProductDTO>> searchPosition(@RequestParam String location) {
         return ResponseEntity.ok(productService.searchByPosition(location));
+    }
+
+    @PostMapping("/add/discount")
+    public ResponseEntity<ProductDTO> addNewDiscount(@RequestBody AddDiscountDTORequest request) {
+        return ResponseEntity.ok(productService.addDiscount(request));
     }
 }

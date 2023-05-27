@@ -44,6 +44,8 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    public final CartService cartService;
+
     private final JwtUtils jwtUtils;
 
     private final DtoMapper dtoMapper;
@@ -98,6 +100,7 @@ public class UserService {
 
             user.setRoles(roles);
             userRepository.save(user);
+            cartService.cretaeCart(user);
             try {
                 simpleUserInfoRepository.delete(simpleUserInfoRepository.findByEmail(signUp.getEmail()).get());
             } catch (Exception e) {

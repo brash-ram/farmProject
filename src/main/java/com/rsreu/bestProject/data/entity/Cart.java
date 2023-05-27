@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -19,9 +20,9 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private UserInfo owner;
 
-    @ManyToMany
-    private List<Product> products;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Product> products = new ArrayList<>();
 }

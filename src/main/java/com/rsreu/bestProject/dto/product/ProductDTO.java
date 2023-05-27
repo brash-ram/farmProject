@@ -70,5 +70,8 @@ public class ProductDTO {
     private Unit unit;
 
     @NotNull
+    private Integer discount;
+
+    @NotNull
     private List<DeliveryType> deliveryTypes = new ArrayList<>();
 }

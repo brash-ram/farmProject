@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -97,7 +98,11 @@ public class DtoMapper {
     }
 
     public List<ProductDTO> mapProductsToDTO(List<Product> products) {
-        return products.stream().map(this::mapProductToDTO).toList();
+        List<ProductDTO> productDTOS = new ArrayList<>();
+        for (Product product : products) {
+            productDTOS.add(mapProductToDTO(product));
+        }
+        return productDTOS;
     }
 
     public ProductAnalyzeDTO mapProductToAnalyze(Product product) {
@@ -125,9 +130,9 @@ public class DtoMapper {
     }
 
     public CartDTO mapCartToDTO(Cart cart) {
-        CartDTO dto = modelMapper.map(cart, CartDTO.class);
-
-        dto.setProducts(mapProductsToDTO(cart.getProducts()));
+        CartDTO dto = new CartDTO()
+                .setOwner(mapUserInfoToDto(cart.getOwner(), 0D))
+                .setProducts(mapProductsToDTO(cart.getProducts()));
         return dto;
     }
 
