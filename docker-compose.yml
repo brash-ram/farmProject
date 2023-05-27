@@ -8,8 +8,8 @@ services:
         ports:
             - "8080:8080"
         environment:
-            DB_URL: jdbc:postgresql://postgres:5432/farmProject
-            RABBIT_HOST: rabbitmq
+            DB_URL: jdbc:postgresql://localhost:5433/farmProject
+            RABBIT_HOST: localhost
             PORT: 8080
         deploy:
             restart_policy:
