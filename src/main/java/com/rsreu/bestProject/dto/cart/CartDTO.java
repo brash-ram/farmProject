@@ -2,6 +2,7 @@ package com.rsreu.bestProject.dto.cart;
 
 import com.rsreu.bestProject.data.entity.Product;
 import com.rsreu.bestProject.data.entity.UserInfo;
+import com.rsreu.bestProject.dto.product.ProductDTO;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
@@ -23,5 +24,5 @@ public class CartDTO {
     private UserInfo owner;
 
     @NotNull
-    private List<Product> products;
+    private List<ProductDTO> products;
 }

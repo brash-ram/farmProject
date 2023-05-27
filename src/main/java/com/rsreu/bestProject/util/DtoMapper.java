@@ -126,7 +126,7 @@ public class DtoMapper {
     public CartDTO mapCartToDTO(Cart cart) {
         CartDTO dto = modelMapper.map(cart, CartDTO.class);
 
-        dto.setProducts(cart.getProducts());
+        dto.setProducts(mapProductsToDTO(cart.getProducts()));
         return dto;
     }
 
