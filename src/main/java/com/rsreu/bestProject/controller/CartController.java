@@ -1,5 +1,6 @@
 package com.rsreu.bestProject.controller;
 
+import com.rsreu.bestProject.dto.cart.CartDTO;
 import com.rsreu.bestProject.dto.cart.CartDTOResponse;
 import com.rsreu.bestProject.dto.template.TemplateDTO;
 import com.rsreu.bestProject.dto.template.request.TemplateDTORequest;
@@ -17,25 +18,24 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping("/add")
-    public ResponseEntity<CartDTOResponse> add(@RequestBody Long userId) {
-        //cartService.add(template);
+    public ResponseEntity<CartDTO> add(@RequestParam Long userId, @RequestParam Long productId) {
         return ResponseEntity
                 .ok()
-                .body(new CartDTOResponse());
+                .body(cartService.add(userId, productId));
     }
 
-    @PostMapping("/delete")
-    public ResponseEntity<TemplateDTOResponse> delete(@RequestParam Long id) {
-        if(cartService.delete(id))
+    @DeleteMapping("/deleteProduct")
+    public ResponseEntity<Void> delete(@RequestParam Long userId, @RequestParam Long productId) {
+        if(cartService.delete(userId, productId))
             return ResponseEntity.ok().build();
         else
             return ResponseEntity.badRequest().build();
 
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<TemplateDTO> update(@RequestBody TemplateDTORequest request) {
-        return ResponseEntity.ok(cartService.update(request));
-    }
+//    @PostMapping("/update")
+//    public ResponseEntity<TemplateDTO> update(@RequestBody TemplateDTORequest request) {
+//        return ResponseEntity.ok(cartService.update(request));
+//    }
 
 }

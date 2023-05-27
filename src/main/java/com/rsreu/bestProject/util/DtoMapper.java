@@ -4,6 +4,7 @@ package com.rsreu.bestProject.util;
 import com.rsreu.bestProject.data.entity.*;
 import com.rsreu.bestProject.dto.analyse.DeliveryAnalyzeDTO;
 import com.rsreu.bestProject.dto.analyse.ProductAnalyzeDTO;
+import com.rsreu.bestProject.dto.cart.CartDTO;
 import com.rsreu.bestProject.dto.course.CourseDTO;
 import com.rsreu.bestProject.dto.delivery.DeliveryDTO;
 import com.rsreu.bestProject.dto.product.ProductDTO;
@@ -120,6 +121,13 @@ public class DtoMapper {
 
     public List<CourseDTO> mapCoursersToDTO(List<Course> courses) {
         return courses.stream().map(this::mapCourseToDTO).toList();
+    }
+
+    public CartDTO mapCartToDTO(Cart cart) {
+        CartDTO dto = modelMapper.map(cart, CartDTO.class);
+
+        dto.setProducts(cart.getProducts());
+        return dto;
     }
 
 }

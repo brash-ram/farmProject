@@ -1,11 +1,14 @@
 package com.rsreu.bestProject.service;
 
+import com.rsreu.bestProject.data.entity.Cart;
 import com.rsreu.bestProject.data.entity.TemplateEntity;
 import com.rsreu.bestProject.data.entity.UserInfo;
 import com.rsreu.bestProject.data.jpa.CartRepository;
 import com.rsreu.bestProject.data.jpa.ProductRepository;
 import com.rsreu.bestProject.data.jpa.TemplateRepository;
 import com.rsreu.bestProject.data.jpa.UserRepository;
+import com.rsreu.bestProject.dto.cart.CartDTO;
+import com.rsreu.bestProject.dto.cart.CartDTOResponse;
 import com.rsreu.bestProject.dto.product.ProductDTO;
 import com.rsreu.bestProject.dto.template.TemplateDTO;
 import com.rsreu.bestProject.dto.template.request.TemplateDTORequest;
@@ -25,21 +28,27 @@ public class CartService {
 
     private final DtoMapper dtoMapper;
 
-    public void add(Long userId, Long productId){
-        var user = userRepository.findById(userId).get();
-        var userCart = cartRepository.findByOwner(user).get().getProducts();
+    public CartDTO add(Long userId, Long productId){
+        var userCart = getCartByUser(userId);
         var product = productRepository.findById(productId).get();
         if(userCart != null && product != null){
-
+            userCart.getProducts().add(product);
         }
+        return dtoMapper.mapCartToDTO(userCart);
     }
 
-    public boolean delete(Long id){
-//        TemplateEntity template = templateRepository.findById(id).orElse(null);
-//        if(template != null){
-//            //templateRepository.delete(template);
-//            return true;
-//        }
+    private Cart getCartByUser(Long userId){
+        var user = userRepository.findById(userId).get();
+        return cartRepository.findByOwner(user).get();
+    }
+
+    public boolean delete(Long userId, Long productId){
+        var cart = getCartByUser(userId);
+        var product = productRepository.findById(productId).get();
+        if(cart != null && product != null){
+            cart.getProducts().remove(product);
+            return true;
+        }
         return false;
 
     }
