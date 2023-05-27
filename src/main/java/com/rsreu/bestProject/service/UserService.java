@@ -125,8 +125,8 @@ public class UserService {
                     .setEmail(email)
                     .setCode(code);
         }
-
-        //emailService.sendSimpleEmail(email, code);
+        code = "Код подтверждения - " + code;
+        emailService.sendSimpleEmail(email, code);
         System.out.println(code);
         simpleUserInfoRepository.save(simpleUserInfo);
     }
@@ -241,7 +241,7 @@ public class UserService {
             try {
                 simpleUserInfoRepository.delete(simpleUserInfoRepository.findByEmail(signUp.getEmail()).get());
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
             Double rating = markService.getRating(user);
             userInfos.add(dtoMapper.mapUserInfoToDto(user, rating));

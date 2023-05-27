@@ -130,10 +130,10 @@ public class DtoMapper {
     }
 
     public CartDTO mapCartToDTO(Cart cart) {
-        CartDTO dto = new CartDTO()
+        return new CartDTO()
                 .setOwner(mapUserInfoToDto(cart.getOwner(), 0D))
-                .setProducts(mapProductsToDTO(cart.getProducts()));
-        return dto;
+                .setProducts(mapProductsToDTO(cart.getProducts()))
+                .setId(cart.getId());
     }
 
 }

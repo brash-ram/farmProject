@@ -11,7 +11,7 @@ public class RatingUtil {
 
         Double sum = 0D;
         for (Integer value : rating) {
-            sum += value;
+            if (value != null) sum += value;
         }
         return sum / rating.size();
     }

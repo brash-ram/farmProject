@@ -30,12 +30,13 @@ public class CartService {
 
     private final DtoMapper dtoMapper;
 
+    @Transactional
     public CartDTO add(Long userId, Long productId){
         var userCart = getCartByUser(userId);
         var product = productRepository.findById(productId).get();
-        if(userCart != null && product != null){
-            userCart.getProducts().add(product);
-        }
+        List<Product> products = userCart.getProducts();
+        products.add(product);
+        userCart.setProducts(products);
         return dtoMapper.mapCartToDTO(userCart);
     }
 
@@ -44,15 +45,14 @@ public class CartService {
         return cartRepository.findByOwner(user).get();
     }
 
+    @Transactional
     public boolean delete(Long userId, Long productId){
         var cart = getCartByUser(userId);
         var product = productRepository.findById(productId).get();
-        if(cart != null && product != null){
-            cart.getProducts().remove(product);
-            return true;
-        }
-        return false;
-
+        List<Product> products = cart.getProducts();
+        products.remove(product);
+        cart.setProducts(products);
+        return true;
     }
 
     public Cart cretaeCart(UserInfo user) {
@@ -77,5 +77,9 @@ public class CartService {
         UserInfo user = userRepository.findById(userId).get();
         Product product = productRepository.findById(productId).get();
         return cartRepository.existsByOwnerAndProductsContains(user, product);
+    }
+
+    public CartDTO my(UserInfo user) {
+        return dtoMapper.mapCartToDTO(cartRepository.findByOwner(user).get());
     }
 }

@@ -1,10 +1,12 @@
 package com.rsreu.bestProject.controller;
 
+import com.rsreu.bestProject.data.entity.UserInfo;
 import com.rsreu.bestProject.dto.cart.CartDTO;
 import com.rsreu.bestProject.dto.cart.CartDTOResponse;
 import com.rsreu.bestProject.dto.template.TemplateDTO;
 import com.rsreu.bestProject.dto.template.request.TemplateDTORequest;
 import com.rsreu.bestProject.dto.template.response.TemplateDTOResponse;
+import com.rsreu.bestProject.security.AuthUtil;
 import com.rsreu.bestProject.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -42,5 +44,11 @@ public class CartController {
 //    public ResponseEntity<TemplateDTO> update(@RequestBody TemplateDTORequest request) {
 //        return ResponseEntity.ok(cartService.update(request));
 //    }
+
+    @GetMapping("/my")
+    public ResponseEntity<CartDTO> myCart() {
+        UserInfo user = AuthUtil.getUserFromContext();
+        return ResponseEntity.ok().body(cartService.my(user));
+    }
 
 }
