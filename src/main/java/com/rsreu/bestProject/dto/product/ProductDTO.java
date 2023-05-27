@@ -1,8 +1,6 @@
 package com.rsreu.bestProject.dto.product;
 
-import com.rsreu.bestProject.data.entity.ProductCategory;
 import com.rsreu.bestProject.enums.DeliveryType;
-import com.rsreu.bestProject.enums.PaymentType;
 import com.rsreu.bestProject.enums.TagProduct;
 import com.rsreu.bestProject.enums.Unit;
 import jakarta.validation.constraints.Min;

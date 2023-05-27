@@ -124,4 +124,15 @@ public class ProductService {
     }
 
 
+    public List<ProductDTO> searchByCategory(String category) {
+        return productRepository.findAllByCategoryName(category).stream().map(dtoMapper::mapProductToDTO).toList();
+    }
+
+    public List<ProductDTO> searchByName(String name) {
+        return productRepository.findAllByNameContainingIgnoreCase(name).stream().map(dtoMapper::mapProductToDTO).toList();
+    }
+
+    public List<ProductDTO> searchByPosition(String location) {
+        return productRepository.findAllByPositionContainingIgnoreCase(location).stream().map(dtoMapper::mapProductToDTO).toList();
+    }
 }

@@ -71,5 +71,18 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductDtoById(id));
     }
 
+    @GetMapping("/search/category")
+    public ResponseEntity<List<ProductDTO>> searchCategory(@RequestParam String category) {
+        return ResponseEntity.ok(productService.searchByCategory(category));
+    }
 
+    @GetMapping("/search/name")
+    public ResponseEntity<List<ProductDTO>> searchName(@RequestParam String name) {
+        return ResponseEntity.ok(productService.searchByName(name));
+    }
+
+    @GetMapping("/search/location")
+    public ResponseEntity<List<ProductDTO>> searchPosition(@RequestParam String location) {
+        return ResponseEntity.ok(productService.searchByPosition(location));
+    }
 }
