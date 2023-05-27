@@ -59,7 +59,8 @@ public class ProductService {
                 .setUnit(dto.getUnit())
                 .setPosition(dto.getPosition())
                 .setStartSales(DateUtils.parse(dto.getStartSales()))
-                .setEndSales(DateUtils.parse(dto.getEndSales()));
+                .setEndSales(DateUtils.parse(dto.getEndSales()))
+                .setDeliveryTypes(dto.getDeliveryTypes());
         productRepository.save(product);
 
         analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapProductToAnalyze(product), AnalyzeMessageType.ADD));
@@ -89,7 +90,8 @@ public class ProductService {
                 .setUnit(dto.getUnit())
                 .setPosition(dto.getPosition())
                 .setStartSales(DateUtils.parse(dto.getStartSales()))
-                .setEndSales(DateUtils.parse(dto.getEndSales()));
+                .setEndSales(DateUtils.parse(dto.getEndSales()))
+                .setDeliveryTypes(dto.getDeliveryTypes());
         productRepository.save(product);
 
         analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapProductToAnalyze(product), AnalyzeMessageType.UPDATE));

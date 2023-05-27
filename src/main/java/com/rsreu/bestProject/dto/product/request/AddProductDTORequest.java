@@ -1,5 +1,6 @@
 package com.rsreu.bestProject.dto.product.request;
 
+import com.rsreu.bestProject.enums.DeliveryType;
 import com.rsreu.bestProject.enums.TagProduct;
 import com.rsreu.bestProject.enums.Unit;
 import jakarta.validation.constraints.Min;
@@ -55,5 +56,8 @@ public class AddProductDTORequest {
 
     @NotNull
     private Long endSales;
+
+    @NotNull
+    private List<DeliveryType> deliveryTypes;
 
 }
