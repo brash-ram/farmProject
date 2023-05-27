@@ -17,6 +17,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -117,6 +119,11 @@ public class UserController {
         UserInfo user = userService.getById(id);
         Double rating = markService.getRating(user);
         return ResponseEntity.ok(dtoMapper.mapUserInfoToDto(user, rating));
+    }
+
+    @PostMapping("/addAll")
+    public ResponseEntity<List<UserInfoDTO>> addAll(@RequestBody List<SignUpCustomDTORequest> requests) {
+        return ResponseEntity.ok(userService.addAll(requests));
     }
 
 }

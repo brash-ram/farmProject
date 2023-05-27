@@ -14,6 +14,7 @@ public enum RoleEnum {
     private static final Map<Integer, RoleEnum> map = new HashMap<>(){{
             put(0, ADMIN);
             put(1, USER);
+            put(2, FARMER);
         }
     };
 

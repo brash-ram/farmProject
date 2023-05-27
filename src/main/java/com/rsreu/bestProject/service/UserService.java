@@ -8,15 +8,13 @@ import com.rsreu.bestProject.data.jpa.RoleRepository;
 import com.rsreu.bestProject.data.jpa.SimpleUserInfoRepository;
 import com.rsreu.bestProject.data.jpa.UserRepository;
 import com.rsreu.bestProject.dto.user.UserInfoDTO;
-import com.rsreu.bestProject.dto.user.request.ChangePasswordDTORequest;
-import com.rsreu.bestProject.dto.user.request.ChangeRoleDTORequest;
-import com.rsreu.bestProject.dto.user.request.SignUpDTORequest;
-import com.rsreu.bestProject.dto.user.request.UpdateUserDTORequest;
+import com.rsreu.bestProject.dto.user.request.*;
 import com.rsreu.bestProject.dto.user.response.UserInfoListDTOResponse;
 import com.rsreu.bestProject.emailSender.EmailService;
 import com.rsreu.bestProject.enums.RoleEnum;
 import com.rsreu.bestProject.security.jwt.JwtUtils;
 import com.rsreu.bestProject.util.CodeUtil;
+import com.rsreu.bestProject.util.DateUtils;
 import com.rsreu.bestProject.util.DtoMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -29,10 +27,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -219,5 +214,35 @@ public class UserService {
         UserInfo user = userRepository.findByEmail(email).get();
         Double rating = markService.getRating(user);
         return dtoMapper.mapUserInfoToDto(user, rating);
+    }
+
+    @Transactional
+    public List<UserInfoDTO> addAll(List<SignUpCustomDTORequest> requests) {
+        List<UserInfoDTO> userInfos = new ArrayList<>();
+        for (SignUpCustomDTORequest signUp : requests) {
+            UserInfo user = new UserInfo()
+                    .setFullName(signUp.getFullName())
+                    .setPassword(passwordEncoder.encode(signUp.getPassword() + config.salt()))
+                    .setBio(signUp.getBio())
+                    .setEmail(signUp.getEmail())
+                    .setDateRegistration(DateUtils.parse(signUp.getDateRegistration()));
+
+            Set<Role> roles = new HashSet<>();
+
+            Role roleInfo = roleRepository.findByName(RoleEnum.USER)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(roleInfo);
+
+            user.setRoles(roles);
+            userRepository.save(user);
+            try {
+                simpleUserInfoRepository.delete(simpleUserInfoRepository.findByEmail(signUp.getEmail()).get());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Double rating = markService.getRating(user);
+            userInfos.add(dtoMapper.mapUserInfoToDto(user, rating));
+        }
+        return userInfos;
     }
 }

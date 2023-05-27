@@ -13,6 +13,7 @@ import com.rsreu.bestProject.dto.user.UserInfoDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Component
@@ -75,7 +76,7 @@ public class DtoMapper {
         dto.setConsumerId(delivery.getConsumer().getId());
         dto.setFarmerId(delivery.getFarmer().getId());
         dto.setDeliveryType(delivery.getDeliveryType());
-        dto.setDate(delivery.getDate().toEpochSecond());
+        dto.setDate(delivery.getDate() != null ? delivery.getDate().toEpochSecond() : OffsetDateTime.now().toEpochSecond());
         dto.setProduct(mapProductToDTO(delivery.getProduct()));
         return dto;
     }

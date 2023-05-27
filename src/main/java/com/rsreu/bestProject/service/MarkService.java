@@ -43,8 +43,13 @@ public class MarkService {
 
     @Transactional
     public double getRating(UserInfo user) {
-        List<Integer> rating = markRepository.findAllByTo(user).stream().map(Mark::getMark).toList();
-        Integer sumMarks = rating.stream().reduce(Integer::sum).get();
-        return (double)sumMarks / rating.size();
+        try {
+            List<Integer> rating = markRepository.findAllByTo(user).stream().map(Mark::getMark).toList();
+            Integer sumMarks = rating.stream().reduce(Integer::sum).get();
+            return (double)sumMarks / rating.size();
+        } catch (Exception e) {
+            return 0D;
+        }
+
     }
 }

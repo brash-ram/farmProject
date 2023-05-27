@@ -21,8 +21,8 @@ public class Delivery {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "delivery_type")
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "delivery_type", length = 30 )
     private DeliveryType deliveryType;
 
     @Column(name = "delivery_date_start")
@@ -37,7 +37,7 @@ public class Delivery {
     @Column(name = "period")
     private Long period;
 
-    @Column(name = "count")
+    @Column(name = "count_product")
     private Long count;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -52,7 +52,7 @@ public class Delivery {
     @JoinColumn(name = "farmer_id")
     private  UserInfo farmer;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "payment_type")
     private PaymentType paymentType;
 
