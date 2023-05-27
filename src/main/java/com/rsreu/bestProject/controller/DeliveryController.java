@@ -46,9 +46,14 @@ public class DeliveryController {
         return ResponseEntity.ok(deliveryService.getDeliveries(id));
     }
 
-    @GetMapping("/getCourse")
+    @GetMapping("/getById")
     public ResponseEntity<DeliveryDTO> getById(@RequestParam Long id) {
         return ResponseEntity.ok(deliveryService.getDeliveryDtoById(id));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<DeliveryDTO>> getAll() {
+        return ResponseEntity.ok(deliveryService.getAll());
     }
 
     @GetMapping("/search/position")

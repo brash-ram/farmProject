@@ -29,17 +29,20 @@ public class MarkController {
         markService.addMark(user, dto.getToId(), dto.getMark());
         return ResponseEntity.ok().build();
     }
-//
-//    @PostMapping("/change/marks/change")
-//    public ResponseEntity<Void> updateRating(@RequestBody ChangeMarkDTO dto) {
-//        markService.changeMark(dto.getNewMark(), dto.getOldMark(), dto.getTargetId());
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    @PostMapping("/change/marks/delete")
-//    public ResponseEntity<Void> deleteMark(@RequestBody DeleteMarkDTORequest dto) {
-//        markService.deleteMark(dto.getMark(), dto.getTargetId());
-//        return ResponseEntity.ok().build();
-//    }
-    
+
+    @PostMapping("/change/marks/change")
+    public ResponseEntity<Void> updateRating(@RequestBody MarkDTO dto) {
+        UserInfo user = AuthUtil.getUserFromContext();
+        markService.changeMark(user,  dto.getToId(), dto.getMark());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/change/marks/delete")
+    public ResponseEntity<Void> deleteMark(@RequestBody MarkDTO dto) {
+        UserInfo user = AuthUtil.getUserFromContext();
+        markService.deleteMark(user,  dto.getToId(), dto.getMark());
+        return ResponseEntity.ok().build();
+    }
+
+
 }

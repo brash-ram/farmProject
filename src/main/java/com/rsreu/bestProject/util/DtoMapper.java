@@ -58,7 +58,7 @@ public class DtoMapper {
         });
     }
 
-    public UserInfoDTO mapUserInfoToDto(UserInfo userInfo) {
+    public UserInfoDTO mapUserInfoToDto(UserInfo userInfo, Double rating) {
         UserInfoDTO userInfoDTO = modelMapper.map(userInfo, UserInfoDTO.class);
         userInfoDTO.setRoles(userInfo.getRoles().stream().map(Role::getName).toList());
         userInfoDTO.setDateRegistration(userInfo.getDateRegistration().toEpochSecond());

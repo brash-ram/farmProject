@@ -116,4 +116,8 @@ public class DeliveryService {
     public DeliveryDTO getDeliveryDtoById(Long id) {
         return dtoMapper.mapDeliveryToDto(deliveryRepository.findById(id).orElse(null));
     }
+
+    public List<DeliveryDTO> getAll() {
+        return deliveryRepository.findAll().stream().map(dtoMapper::mapDeliveryToDto).toList();
+    }
 }

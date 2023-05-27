@@ -1,5 +1,6 @@
 package com.rsreu.bestProject.controller;
 
+import com.rsreu.bestProject.data.entity.UserInfo;
 import com.rsreu.bestProject.dto.mark.AddMarkDTORequest;
 import com.rsreu.bestProject.dto.mark.ChangeMarkDTO;
 import com.rsreu.bestProject.dto.mark.DeleteMarkDTORequest;
@@ -8,6 +9,7 @@ import com.rsreu.bestProject.dto.user.UserInfoDTO;
 import com.rsreu.bestProject.dto.user.request.*;
 import com.rsreu.bestProject.dto.user.response.UserInfoListDTOResponse;
 import com.rsreu.bestProject.security.AuthUtil;
+import com.rsreu.bestProject.service.MarkService;
 import com.rsreu.bestProject.service.UserService;
 import com.rsreu.bestProject.util.DtoMapper;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,8 @@ public class UserController {
     private final UserService userService;
 
     private final DtoMapper dtoMapper;
+
+    private final MarkService markService;
 
     @PostMapping("/signUp/sendEmail")
     public ResponseEntity<Boolean> simpleSignUp(@RequestBody SendEmailDTORequest sendEmailDTORequest) {
@@ -78,7 +82,9 @@ public class UserController {
 
     @GetMapping("/self")
     public ResponseEntity<UserInfoDTO> getCurrent(){
-      return ResponseEntity.ok(dtoMapper.mapUserInfoToDto(AuthUtil.getUserFromContext()));
+        UserInfo user = AuthUtil.getUserFromContext();
+        Double aDouble = markService.getRating(user);
+        return ResponseEntity.ok(dtoMapper.mapUserInfoToDto(user, aDouble));
     }
 
     @PostMapping("/change/password")
@@ -93,7 +99,9 @@ public class UserController {
 
     @PostMapping("/change/role/byId")
     public ResponseEntity<UserInfoDTO> updateRole(@RequestParam Long id) {
-        return ResponseEntity.ok(dtoMapper.mapUserInfoToDto(userService.getById(id)));
+        UserInfo user = userService.getById(id);
+        Double rating = markService.getRating(user);
+        return ResponseEntity.ok(dtoMapper.mapUserInfoToDto(user, rating));
     }
 
     @DeleteMapping("/deleteUser")
@@ -106,7 +114,9 @@ public class UserController {
 
     @GetMapping("/byId")
     public ResponseEntity<UserInfoDTO> getUser(@RequestParam Long id) {
-        return ResponseEntity.ok(dtoMapper.mapUserInfoToDto(userService.getById(id)));
+        UserInfo user = userService.getById(id);
+        Double rating = markService.getRating(user);
+        return ResponseEntity.ok(dtoMapper.mapUserInfoToDto(user, rating));
     }
 
 }

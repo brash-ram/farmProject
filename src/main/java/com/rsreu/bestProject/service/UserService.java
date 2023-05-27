@@ -57,6 +57,8 @@ public class UserService {
 
     private final ApplicationConfig config;
 
+    private final MarkService markService;
+
     public HttpHeaders getAuthorizeHeader(UserInfo userInfo) {
         String jwtToken = jwtUtils.generateTokenFromEmail(userInfo.getEmail());
 
@@ -106,7 +108,8 @@ public class UserService {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return dtoMapper.mapUserInfoToDto(user);
+            Double rating = markService.getRating(user);
+            return dtoMapper.mapUserInfoToDto(user, rating);
         }
         return null;
     }
@@ -150,7 +153,8 @@ public class UserService {
                         new UsernamePasswordAuthenticationToken(user.getEmail(), password + config.salt())
                 );
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                return dtoMapper.mapUserInfoToDto(user);
+                Double rating = markService.getRating(user);
+                return dtoMapper.mapUserInfoToDto(user, rating);
             }
         }
         return null;
@@ -162,21 +166,23 @@ public class UserService {
         userInfo.setEmail(info.getEmail() == null ? userInfo.getEmail() : info.getEmail())
                 .setFullName(info.getFullName())
                 .setBio(info.getBio());
-
-        return dtoMapper.mapUserInfoToDto(userInfo);
+        Double rating = markService.getRating(userInfo);
+        return dtoMapper.mapUserInfoToDto(userInfo, rating);
     }
 
     @Transactional
     public UserInfoListDTOResponse getAllUsers(){
         return new UserInfoListDTOResponse(userRepository.findAll()
                 .stream()
-                .map(dtoMapper::mapUserInfoToDto)
+                .map(userInfo -> dtoMapper.mapUserInfoToDto(userInfo, markService.getRating(userInfo)))
                 .collect(Collectors.toList()));
     }
 
-    public UserInfoDTO getUserInfo(String name){
-        return dtoMapper.mapUserInfoToDto(userRepository.findByEmail(name).orElse(null));
-    }
+//    public UserInfoDTO getUserInfo(String name){
+//        UserInfo user = userRepository.findByEmail(name).get();
+//        Double rating = markService.getRating(user);
+//        return dtoMapper.mapUserInfoToDto(user, rating);
+//    }
 
     @Transactional
     public UserInfoDTO updateRoles(ChangeRoleDTORequest dto) {
@@ -186,7 +192,8 @@ public class UserService {
                 .map(role -> roleRepository.findByName(role).get())
                 .collect(Collectors.toSet())
         );
-        return dtoMapper.mapUserInfoToDto(userInfo);
+        Double rating = markService.getRating(userInfo);
+        return dtoMapper.mapUserInfoToDto(userInfo, rating);
     }
 
     @Transactional
@@ -194,8 +201,8 @@ public class UserService {
         UserInfo user = getById(dto.getId());
 
         user.setPassword(passwordEncoder.encode(dto.getPassword() + config.salt()));
-
-        return dtoMapper.mapUserInfoToDto(user);
+        Double rating = markService.getRating(user);
+        return dtoMapper.mapUserInfoToDto(user, rating);
     }
 
     @Transactional
@@ -209,6 +216,8 @@ public class UserService {
     }
 
     public UserInfoDTO searchByEmail(String email) {
-        return dtoMapper.mapUserInfoToDto(userRepository.findByEmailContains(email).get());
+        UserInfo user = userRepository.findByEmail(email).get();
+        Double rating = markService.getRating(user);
+        return dtoMapper.mapUserInfoToDto(user, rating);
     }
 }
