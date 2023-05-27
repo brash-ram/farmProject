@@ -1,6 +1,7 @@
 package com.rsreu.bestProject.dto.product;
 
 import com.rsreu.bestProject.data.entity.ProductCategory;
+import com.rsreu.bestProject.enums.DeliveryType;
 import com.rsreu.bestProject.enums.PaymentType;
 import com.rsreu.bestProject.enums.TagProduct;
 import com.rsreu.bestProject.enums.Unit;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -68,4 +70,7 @@ public class ProductDTO {
 
     @NotNull
     private Unit unit;
+
+    @NotNull
+    private List<DeliveryType> deliveryTypes = new ArrayList<>();
 }

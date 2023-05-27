@@ -1,5 +1,6 @@
 package com.rsreu.bestProject.data.entity;
 
+import com.rsreu.bestProject.enums.DeliveryType;
 import com.rsreu.bestProject.enums.TagProduct;
 import com.rsreu.bestProject.enums.Unit;
 import jakarta.persistence.*;
@@ -37,7 +38,7 @@ public class Product {
     private ProductCategory category;
 
     @Column(name = "tags")
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "product_rating", joinColumns = @JoinColumn(name = "product_id"))
     private List<TagProduct> tags = new ArrayList<>();
 
@@ -76,5 +77,10 @@ public class Product {
 
     @Column(name = "end_sales")
     private OffsetDateTime endSales;
+
+    @Column(name = "delivery_types")
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<DeliveryType> deliveryTypes;
 
 }

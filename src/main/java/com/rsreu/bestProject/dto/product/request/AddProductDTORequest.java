@@ -48,10 +48,6 @@ public class AddProductDTORequest {
     private Long farmerId;
 
     @NotNull
-    private Long dateRegistration;
-
-
-    @NotNull
     private Unit unit;
 
     @NotNull

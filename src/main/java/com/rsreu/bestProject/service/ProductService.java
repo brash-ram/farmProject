@@ -58,8 +58,8 @@ public class ProductService {
                 .setUserInfo(user)
                 .setUnit(dto.getUnit())
                 .setPosition(dto.getPosition())
-                        .setStartSales(DateUtils.parse(dto.getStartSales()))
-                        .setEndSales(DateUtils.parse(dto.getEndSales()));
+                .setStartSales(DateUtils.parse(dto.getStartSales()))
+                .setEndSales(DateUtils.parse(dto.getEndSales()));
         productRepository.save(product);
 
         analyser.send(AnalyzeUtil.getMessage(dtoMapper.mapProductToAnalyze(product), AnalyzeMessageType.ADD));

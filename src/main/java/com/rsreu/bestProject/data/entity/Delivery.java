@@ -21,6 +21,7 @@ public class Delivery {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "delivery_type")
     private DeliveryType deliveryType;
 
@@ -51,6 +52,7 @@ public class Delivery {
     @JoinColumn(name = "farmer_id")
     private  UserInfo farmer;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "payment_type")
     private PaymentType paymentType;
 
