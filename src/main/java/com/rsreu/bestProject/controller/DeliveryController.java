@@ -41,6 +41,11 @@ public class DeliveryController {
         return ResponseEntity.ok(deliveryService.update(request));
     }
 
+    @PostMapping("/addAll")
+    public ResponseEntity<List<DeliveryDTO>> addAll(@RequestBody List<AddDeliveryDTORequest> request) {
+        return ResponseEntity.ok(deliveryService.addAll(request));
+    }
+
     @GetMapping("/calender")
     public ResponseEntity<Map<Long, List<ProductDTO>>> getDelivery(@RequestParam Long id){
         return ResponseEntity.ok(deliveryService.getDeliveries(id));

@@ -120,4 +120,10 @@ public class DeliveryService {
     public List<DeliveryDTO> getAll() {
         return deliveryRepository.findAll().stream().map(dtoMapper::mapDeliveryToDto).toList();
     }
+
+    public List<DeliveryDTO> addAll(List<AddDeliveryDTORequest> request) {
+        List<DeliveryDTO> results = new ArrayList<>();
+        request.forEach(req -> results.add(add(req)));
+        return results;
+    }
 }
