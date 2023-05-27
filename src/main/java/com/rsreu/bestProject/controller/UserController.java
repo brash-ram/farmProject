@@ -91,24 +91,6 @@ public class UserController {
         return ResponseEntity.ok(userService.updateRoles(changeRoleDTORequest));
     }
 
-    @PostMapping("/change/marks/add")
-    public ResponseEntity<Void> addRating(@RequestBody AddMarkDTORequest dto) {
-        userService.addMark(dto.getMark(), dto.getTargetId());
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/change/marks/change")
-    public ResponseEntity<Void> updateRating(@RequestBody ChangeMarkDTO dto) {
-        userService.changeMark(dto.getNewMark(), dto.getOldMark(), dto.getTargetId());
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/change/marks/delete")
-    public ResponseEntity<Void> deleteMark(@RequestBody DeleteMarkDTORequest dto) {
-        userService.deleteMark(dto.getMark(), dto.getTargetId());
-        return ResponseEntity.ok().build();
-    }
-
     @PostMapping("/change/role/byId")
     public ResponseEntity<UserInfoDTO> updateRole(@RequestParam Long id) {
         return ResponseEntity.ok(dtoMapper.mapUserInfoToDto(userService.getById(id)));

@@ -211,27 +211,4 @@ public class UserService {
     public UserInfoDTO searchByEmail(String email) {
         return dtoMapper.mapUserInfoToDto(userRepository.findByEmailContains(email).get());
     }
-
-    @Transactional
-    public void addMark(Integer mark, Long userId) {
-        UserInfo user = getById(userId);
-        List<Integer> marks = user.getRating();
-        marks.add(mark);
-        user.setRating(marks);
-    }
-
-    public void changeMark(Integer newMark, Integer oldMark, Long targetId) {
-        UserInfo user = getById(targetId);
-        List<Integer> marks = user.getRating();
-        marks.remove(oldMark);
-        marks.add(newMark);
-        user.setRating(marks);
-    }
-
-    public void deleteMark(Integer mark, Long targetId) {
-        UserInfo user = getById(targetId);
-        List<Integer> marks = user.getRating();
-        marks.remove(mark);
-        user.setRating(marks);
-    }
 }

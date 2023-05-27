@@ -1,6 +1,5 @@
 package com.rsreu.bestProject.controller;
 
-import com.rsreu.bestProject.data.entity.Product;
 import com.rsreu.bestProject.dto.delivery.DeliveryDTO;
 import com.rsreu.bestProject.dto.delivery.request.AddDeliveryDTORequest;
 import com.rsreu.bestProject.dto.delivery.request.UpdateDeliveryDTORequest;

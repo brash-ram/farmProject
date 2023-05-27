@@ -36,8 +36,8 @@ public class CourseService {
     }
 
     public CourseDTO update(UpdateCourseDTORequest request){
-        Course course = new Course();
-        course.setDescription(request.getHeader())
+        Course course = courseRepository.findById(request.getId()).get();
+        course.setDescription(request.getDescription())
                 .setHeader(request.getHeader())
                 .setLink(request.getLink())
                 .setId(request.getId());
